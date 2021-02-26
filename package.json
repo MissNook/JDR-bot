@@ -1,0 +1,29 @@
+{
+  "name": "jdr-bot",
+  "version": "1.0.0",
+  "description": "Discord bot pour mon JDR pirates",
+  "main": "index.js",
+  "type" : "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MissNook/JDR-bot.git"
+  },
+  "keywords": [
+    "jdr",
+    "bot",
+    "discord"
+  ],
+  "author": "MissNook",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/MissNook/JDR-bot/issues"
+  },
+  "homepage": "https://github.com/MissNook/JDR-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "ytdl-core": "^4.5.0"
+  }
+}
