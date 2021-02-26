@@ -30,10 +30,10 @@ function getNomTournoi(typeTournoi){
 	return nomTournoi;
 }
 
-function simulerTournoi(embedCombat, typeTournoi, afficherDegats, persosCombat, nbConcurrents){	
+function simulerTournoi(embedMessageTournoi, typeTournoi, afficherDegats, persosCombat, nbConcurrents){	
 	//simuler tournoi d'un type
-	embedCombat.setTitle("Tournoi " + getNomTournoi(typeTournoi));	
-	embedCombat.setColor("#aef2ea");
+	embedMessageTournoi.setTitle("Tournoi " + getNomTournoi(typeTournoi));	
+	embedMessageTournoi.setColor("#aef2ea");
 	
 	if(typeTournoi == "mat_init"){
 		console.log("*************MAT INIT:");
@@ -47,22 +47,22 @@ function simulerTournoi(embedCombat, typeTournoi, afficherDegats, persosCombat, 
 		}
 		console.log("persosTournoi:" + getStrNomsPersos(persosTournoi));
 		
-		embedCombat.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
+		embedMessageTournoi.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
 	}else if(typeTournoi == "mat"){	
 		console.log("*************MAT:");
 		if(persosTournoi.length == 0){
-			embedCombat.addField("ECHEC", "Aucun perso sélectionné, merci d'utiliser le mat_init.")
-			return embedCombat;
+			embedMessageTournoi.addField("ECHEC", "Aucun perso sélectionné, merci d'utiliser le mat_init.")
+			return embedMessageTournoi;
 		}
-		let resTest = testOpposition(persosTournoi, "vig", persosTournoi.length, embedCombat);
+		let resTest = testOpposition(persosTournoi, "vig", persosTournoi.length, embedMessageTournoi);
 		setPlacementPersosParReussites(resTest);
-		embedCombat.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
+		embedMessageTournoi.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
 	}else if(typeTournoi == "mat_tombe"){	
 		console.log("*************MAT TOMBE:" + getStrNomsPersos(persosCombat));
 		setPlacementPersosTombes(persosCombat);
-		embedCombat.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
+		embedMessageTournoi.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
 	}
-	return embedCombat;
+	return embedMessageTournoi;
 }
 
 function getMatAvecPersosPlaces(forInit){
