@@ -3,6 +3,7 @@ import { testOpposition } from './combat.js';
 
 const maxNiveauMat = 10; 
 var persosTournoi = [];
+var positionGagnant = 1;
 
 function getNomTournoi(typeTournoi){
 	let nomTournoi = "";
@@ -30,39 +31,41 @@ function getNomTournoi(typeTournoi){
 	return nomTournoi;
 }
 
-function simulerTournoi(embedCombat, typeTournoi, afficherDegats, persosCombat, nbConcurrents){	
+function simulerTournoi(embedMessageTournoi, typeTournoi, afficherDegats, persosCombat, nbConcurrents){	
 	//simuler tournoi d'un type
-	embedCombat.setTitle("Tournoi " + getNomTournoi(typeTournoi));	
-	embedCombat.setColor("#aef2ea");
+	embedMessageTournoi.setTitle("Tournoi " + getNomTournoi(typeTournoi));	
+	embedMessageTournoi.setColor("#aef2ea");
 	
 	if(typeTournoi == "mat_init"){
-		console.log("*************MAT INIT:");
+		console.log("*************MAT INIT:");		
 		let nbPersosAChoisir = (nbConcurrents-persosCombat.length);
 		let persosChoisis = getRandomPersos(nbPersosAChoisir,["Combattant", "Gabier"]);
 		persosTournoi = persosChoisis.concat(persosCombat);
 		
-		//init des placements au sol
+		//init des placements au sol et de la place gagnante
 		for(let i=0;i<persosTournoi.length;i++){
 			persosTournoi[i].placement = 0;
+			persosTournoi[i].ordreArrivee = -1;
 		}
+		positionGagnant = 1;
 		console.log("persosTournoi:" + getStrNomsPersos(persosTournoi));
 		
-		embedCombat.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
+		embedMessageTournoi.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
 	}else if(typeTournoi == "mat"){	
 		console.log("*************MAT:");
 		if(persosTournoi.length == 0){
-			embedCombat.addField("ECHEC", "Aucun perso sélectionné, merci d'utiliser le mat_init.")
-			return embedCombat;
+			embedMessageTournoi.addField("ECHEC", "Aucun perso sélectionné, merci d'utiliser le mat_init.")
+			return embedMessageTournoi;
 		}
-		let resTest = testOpposition(persosTournoi, "vig", persosTournoi.length, embedCombat);
+		let resTest = testOpposition(persosTournoi, "vig", persosTournoi.length, embedMessageTournoi);
 		setPlacementPersosParReussites(resTest);
-		embedCombat.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
+		embedMessageTournoi.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
 	}else if(typeTournoi == "mat_tombe"){	
 		console.log("*************MAT TOMBE:" + getStrNomsPersos(persosCombat));
 		setPlacementPersosTombes(persosCombat);
-		embedCombat.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
+		embedMessageTournoi.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
 	}
-	return embedCombat;
+	return embedMessageTournoi;
 }
 
 function getMatAvecPersosPlaces(forInit){
@@ -72,8 +75,12 @@ function getMatAvecPersosPlaces(forInit){
 		let nomsPersosACeNiveau = "";
 		for(let j=0;j<persosTournoi.length;j++){
 			if(persosTournoi[j].placement == i){
+				if(i == maxNiveauMat){
+					nomsPersosACeNiveau += getMedaillesParOrdreArrivee(persosTournoi[j].ordreArrivee);
+				}
 				nomsPersosACeNiveau += persosTournoi[j].nom;
 				if(forInit) nomsPersosACeNiveau += "(" + persosTournoi[j].idPerso + ")";
+				
 				nomsPersosACeNiveau += ", ";				
 			}
 		}
@@ -90,6 +97,10 @@ function setPlacementPersosParReussites(resTests){
 			if(resTests[j].nbReussites > 0 && resTests[j].perso.idPerso == persosTournoi[i].idPerso){
 				let nouveauPlacement = persosTournoi[i].placement + resTests[j].nbReussites;
 				nouveauPlacement = nouveauPlacement>maxNiveauMat ? maxNiveauMat : nouveauPlacement;
+				if(nouveauPlacement == maxNiveauMat && persosTournoi[i].ordreArrivee == -1) {
+					persosTournoi[i].ordreArrivee = positionGagnant;
+					positionGagnant++;
+				}
 				persosTournoi[i].placement = nouveauPlacement;
 			}
 		}
@@ -105,6 +116,25 @@ function setPlacementPersosTombes(persosTombes){
 			}
 		}
 	}
+}
+
+function getMedaillesParOrdreArrivee(currOrdreArrivee){
+	let msgMedaille = "";
+	if(currOrdreArrivee >3) return msgMedaille; // pas de médaille
+	
+	switch(currOrdreArrivee){
+		case 1:
+			msgMedaille = ":first_place: ";
+			break;
+		case 2:
+			msgMedaille = ":second_place: ";
+			break;
+		case 3:
+			msgMedaille = ":third_place: ";
+			break;
+
+	}
+	return msgMedaille;
 }
 
 export { persosTournoi, getNomTournoi, simulerTournoi, getRandomPersos };
