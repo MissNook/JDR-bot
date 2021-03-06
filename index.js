@@ -5,9 +5,6 @@ import * as MusiqueModule from './modules/musique.js';
 
 import * as Discord from 'discord.js';
 
-//const Discord = require("discord.js");
-//const { userInfo } = require("os");
-
 const Client = new Discord.Client();
 const prefix = "?";
 
@@ -18,7 +15,7 @@ var embedHelp = new Discord.MessageEmbed()
     .setDescription("Ce bot permet de faire des actions automatiques pour du JDR, comme des tests d'opposition et des combats entre PNJ.")
     .addField("__**?simulationCombat**__", "commande")
     .addField("__**?simulationTournoi**__", "commande ")
-    .addField("__**?play**__", "commande pour jouer de la musique", false)
+    .addField("__**?play**__", "commande pour jouer de la musique", false);
 
 /* POUR SIMULATION COMBAT ET TOURNOI*/
 var embedMessage = new Discord.MessageEmbed();

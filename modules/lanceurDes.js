@@ -46,7 +46,7 @@ function getSpecialActifs(combattant, stat, resDe){
 		let currSpecial = combattant.special[j];				
 		if(currSpecial.typeTest == stat){
 			var desSpecial = currSpecial.des.split(",");
-			for(let k=0;k<combattant.special.length;k++){
+			for(let k=0;k<desSpecial.length;k++){
 				if(parseInt(k,10) == resDe){
 					specialActifs.push(currSpecial);
 				}
