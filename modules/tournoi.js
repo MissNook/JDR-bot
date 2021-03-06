@@ -36,6 +36,18 @@ function simulerTournoi(embedMessageTournoi, typeTournoi, afficherDegats, persos
 	embedMessageTournoi.setTitle("Tournoi " + getNomTournoi(typeTournoi));	
 	embedMessageTournoi.setColor("#aef2ea");
 	
+	switch(typeTournoi){
+		case "mat_init" :
+		case "mat" :
+		case "mat_tombe":
+			embedMessageTournoi = simulerTournoiMonteeDuMat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents);
+			break;
+	}
+	
+	return embedMessageTournoi;
+}
+
+function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents){
 	if(typeTournoi == "mat_init"){
 		console.log("*************MAT INIT:");		
 		let nbPersosAChoisir = (nbConcurrents-persosCombat.length);
