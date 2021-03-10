@@ -1,4 +1,6 @@
 import * as TournoiModule from './modules/tournoi.js';
+import * as PersoModule from './modules/persos.js';
+
 let embedMessage = {
     "fields": [],
     title : "",
@@ -21,12 +23,17 @@ function simulerTournoiCompetence(){
         }
     }
     let persoChoisis = formulaireTournoi["persosChoisis"].value;
-    persoChoisis = persoChoisis.value.trim().length ==0 ? "personne" : persoChoisis.value.trim();
-    let nbConcurrents =  formulaireTournoi["nbConcurrents"].value;
+    persoChoisis = persoChoisis.trim().length ==0 ? "personne" : persoChoisis.value.trim();
+    let nbConcurrents =  parseInt(formulaireTournoi["nbConcurrents"].value);
     if(nbConcurrents < 1 || nbConcurrents >6){
         erreurSpan.innerHTML = "Attention, le nombre de concurrents doit être compris entre 1 et 6."
         return;
     }
-    TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosChoisis,nbConcurrents);
+    let persosCombat = [];		
+	if(persoChoisis != "personne") {
+		persosCombat = PersoModule.getPersosFromArgs(persoChoisis, TournoiModule.persosTournoi);	
+	}
+    TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosCombat, nbConcurrents);
 }
+//obligé de faire comme ça car le module n'est pas visible dans le HTML contrairement à un code JS standard
 document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
