@@ -11,14 +11,14 @@ let embedMessage = {
     setColor : function setColor(newColor){this.color = newColor;}
 };
 let erreurSpan = document.getElementById("erreur");
-const tabEmojis = [{id="ladder", src="https://discord.com/assets/c9ab5c7dade3ae221f8b865b880d3f02.svg"}, 
-{id="beers", src="https://discord.com/assets/5e2ea03aa4963cda5e91d395c2587e6b.svg"}, 
-{id="archery", src="https://discord.com/assets/a33ea7f530f4b720a3a4c050594842fa.svg"}, 
-{id="six_pointed_star", src="https://discord.com/assets/ba9ded4c8399e915303b1f97974a1573.svg"}, 
-{id="leaves", src="https://discord.com/assets/40115dda7d9f615f9561a451236d9623.svg"}, 
-{id="first_place", src="https://discord.com/assets/e2f8f101328a4b4ae7875945716345b3.svg"}, 
-{id="second_place", src="https://discord.com/assets/c65da98dd1cd29756d4d5901ed549661.svg"}, 
-{id="third_place", src="https://discord.com/assets/9ecf90770f4de9be7b44cb601d49722c.svg"}];
+const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae221f8b865b880d3f02.svg"}, 
+{id:"beers", src:"https://discord.com/assets/5e2ea03aa4963cda5e91d395c2587e6b.svg"}, 
+{id:"archery", src:"https://discord.com/assets/a33ea7f530f4b720a3a4c050594842fa.svg"}, 
+{id:"six_pointed_star", src:"https://discord.com/assets/ba9ded4c8399e915303b1f97974a1573.svg"}, 
+{id:"leaves", src:"https://discord.com/assets/40115dda7d9f615f9561a451236d9623.svg"}, 
+{id:"first_place", src:"https://discord.com/assets/e2f8f101328a4b4ae7875945716345b3.svg"}, 
+{id:"second_place", src:"https://discord.com/assets/c65da98dd1cd29756d4d5901ed549661.svg"}, 
+{id:"third_place", src:"https://discord.com/assets/9ecf90770f4de9be7b44cb601d49722c.svg"}];
 const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 
 function afficherEmbedDansHTML(embedsToShow){
@@ -41,6 +41,7 @@ function afficherEmbedDansHTML(embedsToShow){
             fieldsRes.appendChild(span2);
         }
     }
+    divResultat.style.display = "block";
 }
 
 function changeEmojiIntoSvg(textToCheck){
