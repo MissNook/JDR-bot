@@ -35,9 +35,14 @@
             <input type="text" id="persosChoisis" name="persosChoisis"><br>
             <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
             <input type="text" id="nbConcurrents" name="nbConcurrents"><br>
-            <span class="error" name="erreur"></span><br>    
             <input id="btnValiderFormTournoiComp" type="button" onclick="" value="Lancer le tournoi !">
-        </form>
+        </form>        
+        <span class="error" id="erreur"></span><br>    
+        <div id="resultat" style="display: none;">
+          <h4 id="TitreRes">Titre</h4>
+          <h5 id="DescriptionRes">Description</h5> 
+          <p id="fieldsRes"></p>         
+        </div>
     </div>
   </body>
 </html>
