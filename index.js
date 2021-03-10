@@ -63,7 +63,7 @@ Client.on("message", message => {
 			message.channel.send("Cette commande a besoin des paramètres suivants :  nomPerso1,nomPerso2,... typeCombat(com,sen,vig,agi,...,cac,libre) afficheDegats(degats,pasDegats) musicOnOff(musicOn,musicOff)");
 		}
     }
-    //?simulationTournoi nomPerso1,nomPerso2,... typeTournoi(com,sen,vig,agi,mat) nbConcurrents afficheDegats(degats,pasDegats)
+    //?simulationTournoi nomPerso1,nomPerso2,... typeTournoi(com,sen,vig,agi,mat) nbConcurrents init(init ou n'importe) afficheDegats(degats,pasDegats)
 	// nomPerso à "personne" si on a aucun personnage non générés dans le tournoi
 	else if(message.content.startsWith(prefix + "simulationTournoi")){
 		let args = message.content.split(" ");
@@ -73,13 +73,13 @@ Client.on("message", message => {
 		if(args.length > 2){	
 			let persosCombat = [];		
 			if(args[1] != "personne") {
-				let argPersos = args[1].replace(/,/g, " et ");
 				persosCombat = PersoModule.getPersosFromArgs(args[1], TournoiModule.persosTournoi);	
 			}
 			let typeTournoi = args[2];			
 			
-			let afficherDegats = (args.length > 4 && args[4] == "degats");
-			embedMessage = TournoiModule.simulerTournoi(embedMessage, typeTournoi, afficherDegats, persosCombat, args[3]);	
+			let forInit = (args.length > 4 && args[4] == "init");
+			let afficherDegats = (args.length > 5 && args[5] == "degats");
+			embedMessage = TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosCombat, args[3], forInit, afficherDegats);	
 			message.channel.send(embedMessage);	
 		}
 		else{

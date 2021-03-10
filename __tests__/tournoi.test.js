@@ -16,8 +16,8 @@ describe('avec vérification du message retourné', () => {
     };
   }); 
 
-  test('simulerTournoi mat init', () => {
-    let resSimu = ModuleTournoi.simulerTournoi(embedMessage, "mat_init", false, [], 3);
+  test('simulerTournoi mat', () => {
+    let resSimu = ModuleTournoi.simulerTournoi(embedMessage, "mat", [], 3, true);
     expect(ModuleTournoi.persosTournoi.length).toEqual(3);
     expect(resSimu.fields.length).toBeGreaterThan(0);
   });

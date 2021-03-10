@@ -12,7 +12,8 @@ var tabPersos = createTabPersos();
 
 function createTabPersos(){
 	let tableauPersos = [];
-		
+	
+	//createPerso(nom, com, agi, vig, esp, sen, def, defSpe, pv, pvMax, mana, lvl, special, armes){	
 	tableauPersos.push(createPerso("Fredro",4,2,5,1,2,1,1,26,26,7,5, [getSpecialInfo("Torgnole")], [getArmesEtTalentsInfo("Bras mécanique")]));
 	tableauPersos.push(createPerso("MouetteGéante",2,3,2,0,3,0,0,6,6,0,1,null,[getArmesEtTalentsInfo("Frappe")]));
 	tableauPersos.push(createPerso("BernardLHermite",3,1,3,0,1,3,1,6,6,0,1,null,[getArmesEtTalentsInfo("Frappe")]));
@@ -25,12 +26,52 @@ function createTabPersos(){
 	tableauPersos.push(createPerso("GabierA",3,4,2,0,1,0,0,20,20,0,3,null,[getArmesEtTalentsInfo("Dague")]));
 	tableauPersos.push(createPerso("GabierB",3,3,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")]));
 	tableauPersos.push(createPerso("CombattantF",3,1,3,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")])); //vigoureux
+	tableauPersos.push(createPerso("ArcherA",1,2,1,0,3,0,0,15,15,0,1,null,[getArmesEtTalentsInfo("Arc")])); //SEN
+	tableauPersos.push(createPerso("ArcherB",1,2,1,0,3,1,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + DEF
+	tableauPersos.push(createPerso("ArcherC",1,3,1,0,3,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + AGI
+	tableauPersos.push(createPerso("ArcherD",1,2,1,0,5,0,0,20,20,0,5,null,[getArmesEtTalentsInfo("Arc")])); //SEN
+	tableauPersos.push(createPerso("ArcherE",1,2,1,0,4,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Arc")])); //SEN
+	tableauPersos.push(createPerso("ArcherF",1,2,1,2,4,0,0,20,20,0,4,null,[getArmesEtTalentsInfo("Arc")])); //SEN + ESP
+	tableauPersos.push(createPerso("ArcherF",3,2,1,2,3,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Arc")])); //SEN + COM
+	tableauPersos.push(createPerso("MageA",1,2,1,3,3,0,0,15,15,15,3,null,[getArmesEtTalentsInfo("Dague")])); //ESP + SEN
+	tableauPersos.push(createPerso("MageB",1,2,1,3,1,0,2,15,15,15,2,null,[getArmesEtTalentsInfo("Dague")])); //ESP + DEFSPE
+	tableauPersos.push(createPerso("MageC",1,3,1,4,1,0,0,15,15,20,3,null,[getArmesEtTalentsInfo("Dague")])); //ESP 
+	tableauPersos.push(createPerso("MageD",3,2,1,3,1,0,0,20,20,20,4,null,[getArmesEtTalentsInfo("Dague")])); //ESP + COM
+	tableauPersos.push(createPerso("MageE",1,2,1,5,1,0,0,15,15,20,5,null,[getArmesEtTalentsInfo("Dague")])); //ESP
+	tableauPersos.push(createPerso("MageF",1,2,1,3,4,1,1,15,15,20,2,null,[getArmesEtTalentsInfo("Dague")])); //ESP + DEF + DEFSPE
+
 	
 	//Identifiant unique à chaque perso
 	for(let i=0;i<tableauPersos.length;i++){
 		tableauPersos[i].idPerso = i;
 	}
 	return tableauPersos;
+}
+function fillTabArmesTalents(){
+	//dégats correspond au type de dé (8 pour d8)
+	//ARMES CAC	
+	tabArmesTalents.push({nom : "Bras mécanique", typeTest: "com", degats: 8});
+	tabArmesTalents.push({nom : "Sabre", typeTest: "com", degats: 6});
+	tabArmesTalents.push({nom : "Dague", typeTest: "com", degats: 4});
+	tabArmesTalents.push({nom : "Frappe forte", typeTest: "com", degats: 8});
+	tabArmesTalents.push({nom : "Frappe moyenne", typeTest: "com", degats: 6});
+	tabArmesTalents.push({nom : "Frappe", typeTest: "com", degats: 4});
+	//ARMES DIST
+	tabArmesTalents.push({nom : "Arc", typeTest: "sen", degats: 4});
+	tabArmesTalents.push({nom : "Pistolet", typeTest: "sen", degats: 6});
+	//MAGIE
+}
+
+function fillTabSpecial(){
+	//		dés = chiffres "1,2,3"
+	//		zoneEffet = self, ally, enemy, we, them 
+	//		typeEffet = degats, degatsParTour, soin, buff, debuff, invoc, testOpposition, augmenteReussites, augmenteDes
+	//		resultatEffetOpposition = noMvt, noSen, buffCOM (COM +1D)
+
+	tabSpecial.push({ nom : "Torgnole", typeTest : "com", des : "4,6", zoneEffet  : "enemy", 
+		typeEffet:"testOpposition", typeTestOpposition : "VIG,AGI", valeurEffet :2, resultatEffetOpposition : "noMvt"});
+	tabSpecial.push({ nom : "Dissimulation", typeTest : "com", des : "3,4", zoneEffet  : "self", 
+		typeEffet:"testOpposition", typeTestOpposition : "SEN", valeurEffet :1, resultatEffetOpposition : "buffCOM"});
 }
 
 // special est à null s'il n'y en a pas, les stats sont à 0 dans le même cas
@@ -55,6 +96,7 @@ function getRandomPersos(nbRandomPersos, nomsPersosAcceptes){
 	}
 	
 	let idDejaChoisis = "";
+	//ATTENTION BOUCLE INFINIE DES QU'ON DEPASSE LE NOMBRE DE PROFILS DISPO (donc 6) - A CHANGER
 	while(persosChoisis.length < nbRandomPersos){
 		for(i=0;i<tabPersosAChoisir.length;i++){
 			if(persosChoisis.length >= nbRandomPersos) break;
@@ -130,18 +172,6 @@ function getPersosFromNoms(tabNoms, tabRecherches, avecNomsIncomplets){
 	return persosRecuperes;
 }
 
-function fillTabSpecial(){
-	//		dés = chiffres "1,2,3"
-	//		zoneEffet = self, ally, enemy, we, them 
-	//		typeEffet = degats, degatsParTour, soin, buff, debuff, invoc, testOpposition, augmenteReussites, augmenteDes
-	//		resultatEffetOpposition = noMvt, noSen, buffCOM (COM +1D)
-
-	tabSpecial.push({ nom : "Torgnole", typeTest : "com", des : "4,6", zoneEffet  : "enemy", 
-		typeEffet:"testOpposition", typeTestOpposition : "VIG,AGI", valeurEffet :2, resultatEffetOpposition : "noMvt"});
-	tabSpecial.push({ nom : "Dissimulation", typeTest : "com", des : "3,4", zoneEffet  : "self", 
-		typeEffet:"testOpposition", typeTestOpposition : "SEN", valeurEffet :1, resultatEffetOpposition : "buffCOM"});
-}
-
 function getSpecialInfo(nomSpecial){
 	for(let i=0;i<tabSpecial.length;i++){
 		if(tabSpecial[i].nom == nomSpecial){
@@ -149,21 +179,6 @@ function getSpecialInfo(nomSpecial){
 		}
 	}
 	 return null;
-}
-
-function fillTabArmesTalents(){
-	//dégats correspond au type de dé (8 pour d8)
-	//ARMES CAC	
-	tabArmesTalents.push({nom : "Bras mécanique", typeTest: "com", degats: 8});
-	tabArmesTalents.push({nom : "Sabre", typeTest: "com", degats: 6});
-	tabArmesTalents.push({nom : "Dague", typeTest: "com", degats: 4});
-	tabArmesTalents.push({nom : "Frappe forte", typeTest: "com", degats: 8});
-	tabArmesTalents.push({nom : "Frappe moyenne", typeTest: "com", degats: 6});
-	tabArmesTalents.push({nom : "Frappe", typeTest: "com", degats: 4});
-	//ARMES DIST
-	tabArmesTalents.push({nom : "Arc", typeTest: "sen", degats: 4});
-	tabArmesTalents.push({nom : "Pistolet", typeTest: "sen", degats: 6});
-	//MAGIE
 }
 
 function getArmesEtTalentsInfo(nomArme){

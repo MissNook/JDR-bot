@@ -4,55 +4,77 @@ import { testOpposition } from './combat.js';
 const maxNiveauMat = 10; 
 var persosTournoi = [];
 var positionGagnant = 1;
+const emoteBonResultat = ":star:";
+const emoteTresBonResultat = ":star2:";
 
-function getNomTournoi(typeTournoi){
-	let nomTournoi = "";
+function getInfoAffichageTournoi(typeTournoi){
+	let infoTournoi = {emote : "", nomTournoi :"", nomParticipants :""};
 	switch(typeTournoi){
 		case "com":
-			nomTournoi = "de combat";
+			infoTournoi.nomTournoi = "de combat";
+			infoTournoi.nomParticipants = "combattants";
 			break;
 		case "agi":
-			nomTournoi = "d'agilité";
+			infoTournoi.nomTournoi = "d'agilité";
+			infoTournoi.nomParticipants = "gabiers et autres loustics";
 			break;
 		case "sen":
-			nomTournoi = "d'archerie";
+			infoTournoi.nomTournoi = "d'archerie";
+			infoTournoi.emote = ":archery:";
+			infoTournoi.nomParticipants = "archers";
 			break;
 		case "vig":
-			nomTournoi = "de boisson";
+			infoTournoi.nomTournoi = "de boisson";
+			infoTournoi.emote = ":beers:";
+			infoTournoi.nomParticipants = "pirates";
 			break;
 		case "esp":
-			nomTournoi = "de magie";
+			infoTournoi.nomTournoi = "de magie";
+			infoTournoi.emote = ":six_pointed_star:";
+			infoTournoi.nomParticipants = "mages";
 			break;
-		case "mat_init" :
 		case "mat" :
-			nomTournoi = "Haut de la Hune"
+		case "mat_tombe":
+			infoTournoi.nomTournoi = "Haut de la Hune"
 			break;
-	}				
-	return nomTournoi;
+	}
+	return infoTournoi;	
 }
 
-function simulerTournoi(embedMessageTournoi, typeTournoi, afficherDegats, persosCombat, nbConcurrents){	
+function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, afficherDegats){	
 	//simuler tournoi d'un type
-	embedMessageTournoi.setTitle("Tournoi " + getNomTournoi(typeTournoi));	
+	embedMessageTournoi.setTitle("Tournoi " + getInfoAffichageTournoi(typeTournoi).nomTournoi);	
 	embedMessageTournoi.setColor("#aef2ea");
+	console.log("Simuler Tournoi : " + typeTournoi + "/" + persosCombat.length + "/" + nbConcurrents + "/" + forInit);
 	
 	switch(typeTournoi){
-		case "mat_init" :
 		case "mat" :
 		case "mat_tombe":
 			embedMessageTournoi = simulerTournoiMonteeDuMat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents);
 			break;
-	}
-	
+		case "com" :
+		case "agi" :
+		case "vig" :
+		case "esp" :
+		case "sen" :
+			embedMessageTournoi = simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit);
+			break;
+	}	
 	return embedMessageTournoi;
 }
 
-function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents){
-	if(typeTournoi == "mat_init"){
+function initPersosTournoi(persosCombat, nbConcurrents, nomsPersosAcceptes){
+	console.log("Initialisation persos Tournoi");
+	let nbPersosAChoisir = (nbConcurrents-persosCombat.length);
+	let persosChoisis = getRandomPersos(nbPersosAChoisir,nomsPersosAcceptes);
+	persosTournoi = persosChoisis.concat(persosCombat);
+	console.log("FIN Initialisation persos Tournoi : " + persosTournoi.length);
+}
+
+function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit){
+	if(forInit || persosTournoi.length == 0){
 		console.log("*************MAT INIT:");		
-		let nbPersosAChoisir = (nbConcurrents-persosCombat.length);
-		let persosChoisis = getRandomPersos(nbPersosAChoisir,["Combattant", "Gabier"]);
-		persosTournoi = persosChoisis.concat(persosCombat);
+		initPersosTournoi(persosCombat, nbConcurrents, ["Combattant", "Gabier"])
 		
 		//init des placements au sol et de la place gagnante
 		for(let i=0;i<persosTournoi.length;i++){
@@ -60,15 +82,12 @@ function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosComba
 			persosTournoi[i].ordreArrivee = -1;
 		}
 		positionGagnant = 1;
-		console.log("persosTournoi:" + getStrNomsPersos(persosTournoi));
-		
-		embedMessageTournoi.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
-	}else if(typeTournoi == "mat"){	
+		console.log("persosTournoi:" + getStrNomsPersos(persosTournoi));		
+		//embedMessageTournoi.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
+	}
+	
+	if(typeTournoi == "mat"){	
 		console.log("*************MAT:");
-		if(persosTournoi.length == 0){
-			embedMessageTournoi.addField("ECHEC", "Aucun perso sélectionné, merci d'utiliser le mat_init.")
-			return embedMessageTournoi;
-		}
 		let resTest = testOpposition(persosTournoi, "vig", persosTournoi.length, embedMessageTournoi);
 		setPlacementPersosParReussites(resTest);
 		embedMessageTournoi.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
@@ -78,6 +97,76 @@ function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosComba
 		embedMessageTournoi.addField(persosTournoi.length + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces());
 	}
 	return embedMessageTournoi;
+}
+
+function simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit){
+	console.log("simulerTournoiSurUneStat");
+	if(forInit || persosTournoi.length == 0){
+		initTournoiSurUneStat(typeTournoi, persosCombat,nbConcurrents);
+	}
+	let resTest = testOpposition(persosTournoi,typeTournoi, persosTournoi.length, embedMessageTournoi);
+	let infoTournoi = getInfoAffichageTournoi(typeTournoi);	
+	if(infoTournoi.emote != ""){
+		embedMessageTournoi.title = infoTournoi.emote + embedMessageTournoi.title + infoTournoi.emote;
+	}
+	let msgRes = getMessageResultatTournoiSurUneStat(resTest, infoTournoi);
+	embedMessageTournoi.addField("Résultat du tour des " + infoTournoi.nomParticipants, msgRes);
+
+	return embedMessageTournoi;
+}
+
+function initTournoiSurUneStat(typeTournoi, persosCombat, nbConcurrents){
+	let nomsAcceptes;
+	switch(typeTournoi){
+		case "com" :
+			nomsAcceptes = ["Combattant", "Gabier"];
+			break;
+		case "agi" :
+			nomsAcceptes = ["Gabier"];
+			break;
+		case "vig" :
+			nomsAcceptes = ["Combattant"];
+			break;
+		case "esp" :
+			nomsAcceptes = ["Mage"];
+			break;
+		case "sen" :
+			nomsAcceptes = ["Archer"];
+			break;
+	}
+	initPersosTournoi(persosCombat, nbConcurrents, nomsAcceptes)
+}
+
+function getMessageResultatTournoiSurUneStat(resTests, infoTournoi){
+	let msgRes = "";
+	for(let i=0;i<resTests.length;i++){
+		let currRes = resTests[i];
+		for(let j=0;j<persosTournoi.length;j++){
+			if(currRes.perso.idPerso == persosTournoi[j].idPerso){
+				let marqueurReussites = "";
+				if(typeof persosTournoi[j].nbReussitesTotal == "undefined"){
+					persosTournoi[j].nbReussitesTotal = currRes.nbReussites;
+				}
+				else{
+					persosTournoi[j].nbReussitesTotal += currRes.nbReussites;
+				}
+				if(currRes.nbReussites >=5){
+					marqueurReussites = emoteTresBonResultat;
+				}else if(currRes.nbReussites >=3){
+					marqueurReussites = emoteBonResultat;
+				}
+				msgRes += currRes.nbReussites + " réussites pour "+ currRes.perso.nom + " " + marqueurReussites + "\n";
+			}
+		}		
+	}
+	return msgRes;
+}
+
+function sortResTest(res1, res2){
+	if(res1.nbReussites > res2.nbReussites)
+		return -1;	
+	else
+		return 1;	
 }
 
 function getMatAvecPersosPlaces(forInit){
@@ -149,4 +238,4 @@ function getMedaillesParOrdreArrivee(currOrdreArrivee){
 	return msgMedaille;
 }
 
-export { persosTournoi, getNomTournoi, simulerTournoi, getRandomPersos };
+export { persosTournoi, getInfoAffichageTournoi, simulerTournoi, getRandomPersos };
