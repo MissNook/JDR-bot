@@ -20,7 +20,7 @@
         <h2>Les tournois</h2>
         <h3>Le tournoi du mat</h3>
         <h3>Le tournoi de compétences</h3>
-        <form name="formTournoiComp" onsubmit="simulerTournoiCompetence">
+        <form name="formTournoiComp" action="#">
             <input type="radio" id="combat" name="competence" value="com">
             <label for="combat">Combat</label><br>
             <input type="radio" id="agilite" name="competence" value="agi">
@@ -36,7 +36,7 @@
             <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
             <input type="text" id="nbConcurrents" name="nbConcurrents"> 
             <span class="error" name="erreur"></span>     
-            <input type="submit" value="Lancer le tournoi !">
+            <input type="button" onclick="simulerTournoiCompetence" value="Lancer le tournoi !">
         </form>
     </div>
   </body>
