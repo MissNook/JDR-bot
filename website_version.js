@@ -9,7 +9,6 @@ let embedMessage = {
     setColor : function setColor(newColor){this.color = newColor;}
 };
 
-
 function simulerTournoiCompetence(){
     let formulaireTournoi = document.forms["formTournoiComp"];
     let erreurSpan = formulaireTournoi["erreur"];
@@ -30,3 +29,4 @@ function simulerTournoiCompetence(){
     }
     TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosChoisis,nbConcurrents);
 }
+document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
