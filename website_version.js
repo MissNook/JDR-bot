@@ -28,20 +28,25 @@ function afficherEmbedDansHTML(embedsToShow){
     let fieldsRes = document.getElementById("fieldsRes");
     for(let i=0;i<embedsToShow.length;i++){
         let currEmbed = embedsToShow[i];       
-        titreRes.innerHTML = changeEmojiIntoSvg(currEmbed.title);
+        titreRes.innerHTML = formatForHTML(currEmbed.title);
         descRes.innerHTML = currEmbed.description;
         divResultat.style.border = "3px solid " + currEmbed.color;
         for(let j=0;j<currEmbed.fields.length;j++){
             let currField = currEmbed.fields[j];
-            var span = document.createElement("span");
-            span.innerHTML = changeEmojiIntoSvg(currField.name);
-            fieldsRes.appendChild(span);            
+            var boldText = document.createElement("b");
+            boldText.innerHTML = formatForHTML(currField.name);
+            fieldsRes.appendChild(boldText);            
             var span2 = document.createElement("span");
-            span2.innerHTML = changeEmojiIntoSvg(currField.value);
+            span2.innerHTML = formatForHTML(currField.value);
             fieldsRes.appendChild(span2);
         }
     }
     divResultat.style.display = "block";
+}
+
+function formatForHTML(textToCheck){
+    let newTextWithEmojis = changeEmojiIntoSvg(textToCheck);
+    return newTextWithEmojis.replace(/\n/g, "<br>");
 }
 
 function changeEmojiIntoSvg(textToCheck){
