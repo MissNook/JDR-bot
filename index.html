@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JDR pirates</title>
+   <!-- <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>-->
+    <!-- Don't use this in production: -->
+    <!--<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>-->
+    <script src="modules/tournoi.js" type="module"></script>
+    <script src="modules/combat.js" type="module"></script>
+    <script src="modules/persos.js" type="module"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div>
+        <h1>JDR pirates - Les outils de piraterie !</h1>
+        <h2>Les tournois</h2>
+        <h3>Le tournoi du mat</h3>
+        <h3>Le tournoi de compétences</h3>
+        <form onclick="">
+            <input type="radio" id="combat" name="competence" value="com">
+            <label for="combat">Combat</label><br>
+            <input type="radio" id="agilite" name="competence" value="agi">
+            <label for="agilite">Agilité</label><br>
+            <input type="radio" id="vigueur" name="competence" value="vig">
+            <label for="vigueur">Vigueur</label><br>
+            <input type="radio" id="sens" name="competence" value="sen">
+            <label for="sens">Sens</label><br>
+            <input type="radio" id="esprit" name="competence" value="esp">
+            <label for="esprit">Esprit</label><br>
+            <input type="submit" value="Lancer le tournoi !">
+        </form>
+    </div>
+  </body>
+</html>
