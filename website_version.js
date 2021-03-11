@@ -18,7 +18,10 @@ const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae2
 {id:"leaves", src:"https://discord.com/assets/40115dda7d9f615f9561a451236d9623.svg"}, 
 {id:"first_place", src:"https://discord.com/assets/e2f8f101328a4b4ae7875945716345b3.svg"}, 
 {id:"second_place", src:"https://discord.com/assets/c65da98dd1cd29756d4d5901ed549661.svg"}, 
-{id:"third_place", src:"https://discord.com/assets/9ecf90770f4de9be7b44cb601d49722c.svg"}];
+{id:"third_place", src:"https://discord.com/assets/9ecf90770f4de9be7b44cb601d49722c.svg"},
+{id:"star", src:"https://discord.com/assets/141d49436743034a59dec6bd5618675d.svg"},
+{id:"star2", src:"https://discord.com/assets/030fc6691abd2ab36c1d90407e02505e.svg"}
+];
 const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 
 function afficherEmbedDansHTML(embedsToShow){
@@ -34,7 +37,7 @@ function afficherEmbedDansHTML(embedsToShow){
         for(let j=0;j<currEmbed.fields.length;j++){
             let currField = currEmbed.fields[j];
             var boldText = document.createElement("b");
-            boldText.innerHTML = formatForHTML(currField.name);
+            boldText.innerHTML = formatForHTML(currField.name) + "<br>";
             fieldsRes.appendChild(boldText);            
             var span2 = document.createElement("span");
             span2.innerHTML = formatForHTML(currField.value);
@@ -56,9 +59,11 @@ function changeEmojiIntoSvg(textToCheck){
         for(let i=0;i<splitText.length;i++){
             for(let j=0;j<tabEmojis.length;j++){
                 if(splitText[i] == tabEmojis[j].id){
-                    innerHTML = svgImgHTML.replace("#src#", tabEmojis[j].src);                   
+                    innerHTML = svgImgHTML.replace("#src#", tabEmojis[j].src);
+                    break;                 
                 }else{
                     innerHTML += splitText[i];
+                    break;
                 }
             }
         }
