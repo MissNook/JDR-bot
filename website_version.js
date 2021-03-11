@@ -53,7 +53,7 @@ function changeEmojiIntoSvg(textToCheck){
             let hasEmoji = false;
             for(let j=0;j<tabEmojis.length;j++){
                 if(splitText[i] == tabEmojis[j].id){
-                    innerHTML = svgImgHTML.replace("#src#", tabEmojis[j].src);
+                    innerHTML += svgImgHTML.replace("#src#", tabEmojis[j].src);
                     hasEmoji = true;
                     break;                 
                 }
@@ -76,9 +76,20 @@ function initEmbed(){
         setTitle : function setTitle(newTitle){this.title = newTitle;},
         setColor : function setColor(newColor){this.color = newColor;}
     };
+    clearResultat();
+}
+
+function clearResultat(){
+    let titreRes = document.getElementById("TitreRes");
+    let descRes = document.getElementById("DescriptionRes");
+    let fieldsRes = document.getElementById("fieldsRes");
+    titreRes.innerHTML = "";
+    descRes.innerHTML = "";
+    fieldsRes.innerHTML = "";
 }
 
 function simulerTournoiCompetence(){
+    clearResultat();
     let formulaireTournoi = document.forms["formTournoiComp"];  
     let typeTournoiBtns = formulaireTournoi["competence"];
     let typeTournoi = "";
