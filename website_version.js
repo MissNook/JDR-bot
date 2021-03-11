@@ -17,6 +17,32 @@ const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae2
 ];
 const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 
+function simulerTournoiCompetence(){
+    clearResultat();
+    let formulaireTournoi = document.forms["formTournoiComp"];  
+    let typeTournoiBtns = formulaireTournoi["competence"];
+    let typeTournoi = "";
+    for(let  i=0;i<typeTournoiBtns.length;i++){
+        if(typeTournoiBtns[i].checked){
+            typeTournoi = typeTournoiBtns[i].value;
+            break;
+        }
+    }
+    let persoChoisis = formulaireTournoi["persosChoisis"].value;
+    persoChoisis = persoChoisis.trim().length ==0 ? "personne" : persoChoisis.trim();
+    let nbConcurrents =  parseInt(formulaireTournoi["nbConcurrents"].value);
+    if(nbConcurrents < 1 || nbConcurrents > 6){
+        erreurSpan.innerHTML = "Attention, le nombre de concurrents doit être compris entre 1 et 6."
+        return;
+    }
+    let persosCombat = [];		
+	if(persoChoisis != "personne") {
+		persosCombat = PersoModule.getPersosFromArgs(persoChoisis, TournoiModule.persosTournoi);	
+	}
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosCombat, nbConcurrents);
+    afficherEmbedDansHTML([returnedEmbed]);
+}
+
 function afficherEmbedDansHTML(embedsToShow){
     let divResultat = document.getElementById("resultat");
     let titreRes = document.getElementById("TitreRes");
@@ -86,33 +112,9 @@ function clearResultat(){
     titreRes.innerHTML = "";
     descRes.innerHTML = "";
     fieldsRes.innerHTML = "";
+    divResultat.style.display = "none";
 }
 
-function simulerTournoiCompetence(){
-    clearResultat();
-    let formulaireTournoi = document.forms["formTournoiComp"];  
-    let typeTournoiBtns = formulaireTournoi["competence"];
-    let typeTournoi = "";
-    for(let  i=0;i<typeTournoiBtns.length;i++){
-        if(typeTournoiBtns[i].checked){
-            typeTournoi = typeTournoiBtns[i].value;
-            break;
-        }
-    }
-    let persoChoisis = formulaireTournoi["persosChoisis"].value;
-    persoChoisis = persoChoisis.trim().length ==0 ? "personne" : persoChoisis.value.trim();
-    let nbConcurrents =  parseInt(formulaireTournoi["nbConcurrents"].value);
-    if(nbConcurrents < 1 || nbConcurrents >6){
-        erreurSpan.innerHTML = "Attention, le nombre de concurrents doit être compris entre 1 et 6."
-        return;
-    }
-    let persosCombat = [];		
-	if(persoChoisis != "personne") {
-		persosCombat = PersoModule.getPersosFromArgs(persoChoisis, TournoiModule.persosTournoi);	
-	}
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosCombat, nbConcurrents);
-    afficherEmbedDansHTML([returnedEmbed]);
-}
 //obligé de faire comme ça car le module n'est pas visible dans le HTML contrairement à un code JS standard
 document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
 document.getElementById("btnClearEmbedTournoiComp").onclick = initEmbed;
