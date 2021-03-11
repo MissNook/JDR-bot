@@ -32,10 +32,11 @@
             <input type="radio" id="esprit" name="competence" value="esp">
             <label for="esprit">Esprit</label><br>
             <label for="persosChoisis">Personnages choisis séparés par des virgules (laisser vide si aucun) :</label>
-            <input type="text" id="persosChoisis" name="persosChoisis"><br>
+            <input type="text" id="persosChoisis" name="persosChoisis" size="50"><br>
             <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
-            <input type="text" id="nbConcurrents" name="nbConcurrents"><br>
+            <input type="text" id="nbConcurrents" name="nbConcurrents" size="1"><br>
             <input id="btnValiderFormTournoiComp" type="button" onclick="" value="Lancer le tournoi !">
+            <input id="btnClearEmbedTournoiComp" type="button" onclick="" value="Effacer les résultats">
         </form>        
         <span class="error" id="erreur"></span><br>    
         <div id="resultat" style="display: none;">

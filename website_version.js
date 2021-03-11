@@ -1,15 +1,8 @@
 import * as TournoiModule from './modules/tournoi.js';
 import * as PersoModule from './modules/persos.js';
 
-let embedMessage = {
-    "fields": [],
-    title : "",
-    description : "",
-    color:"",
-    addField : function addField(name, value){ this.fields.push({name : name, value : value});},
-    setTitle : function setTitle(newTitle){this.title = newTitle;},
-    setColor : function setColor(newColor){this.color = newColor;}
-};
+let embedMessage;
+initEmbed();
 let erreurSpan = document.getElementById("erreur");
 const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae221f8b865b880d3f02.svg"}, 
 {id:"beers", src:"https://discord.com/assets/5e2ea03aa4963cda5e91d395c2587e6b.svg"}, 
@@ -57,20 +50,32 @@ function changeEmojiIntoSvg(textToCheck){
     let innerHTML = "";
     if(splitText.length>1){
         for(let i=0;i<splitText.length;i++){
+            let hasEmoji = false;
             for(let j=0;j<tabEmojis.length;j++){
                 if(splitText[i] == tabEmojis[j].id){
                     innerHTML = svgImgHTML.replace("#src#", tabEmojis[j].src);
+                    hasEmoji = true;
                     break;                 
-                }else{
-                    innerHTML += splitText[i];
-                    break;
                 }
             }
+            if(!hasEmoji) innerHTML += splitText[i];
         }
     }else{
         innerHTML += splitText[0];
     }
     return innerHTML;
+}
+
+function initEmbed(){
+    embedMessage = {
+        "fields": [],
+        title : "",
+        description : "",
+        color:"",
+        addField : function addField(name, value){ this.fields.push({name : name, value : value});},
+        setTitle : function setTitle(newTitle){this.title = newTitle;},
+        setColor : function setColor(newColor){this.color = newColor;}
+    };
 }
 
 function simulerTournoiCompetence(){
@@ -99,3 +104,4 @@ function simulerTournoiCompetence(){
 }
 //obligé de faire comme ça car le module n'est pas visible dans le HTML contrairement à un code JS standard
 document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
+document.getElementById("btnClearEmbedTournoiComp").onclick = initEmbed;
