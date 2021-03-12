@@ -142,15 +142,16 @@ function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 		for(let j=0;j<persosTournoi.length;j++){
 			if(currRes.perso.idPerso == persosTournoi[j].idPerso){
 				let marqueurReussites = "";
-				if(typeof persosTournoi[j].nbReussitesTotal == "undefined"){
-					persosTournoi[j].reussitesParTour = [];
-					persosTournoi[j].reussitesParTour.push(currRes.nbReussites)
-					persosTournoi[j].nbReussitesTotal = currRes.nbReussites;
+				let currPerso = persosTournoi[j];
+				if(typeof currPerso.nbReussitesTotal == "undefined"){
+					currPerso.reussitesParTour = [];
+					currPerso.reussitesParTour.push(currRes.nbReussites)
+					currPerso.nbReussitesTotal = currRes.nbReussites;
 				}
 				else{
-					persosTournoi[j].nbReussitesTotal += currRes.nbReussites;
-					let lastTour = persosTournoi[j].reussitesParTour[persosTournoi[j].tours.length-1];				
-					persosTournoi[j].reussitesParTour.push(currRes.nbReussites);
+					currPerso.nbReussitesTotal += currRes.nbReussites;
+					let lastTour = currPerso.reussitesParTour[currPerso.tours.length-1];				
+					currPerso.reussitesParTour.push(currRes.nbReussites);
 				}
 				if(currRes.nbReussites >=5){
 					marqueurReussites = emoteTresBonResultat;
@@ -159,10 +160,10 @@ function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 				}
 				if(modeColonnes){
 					msgRes += currRes.perso.nom;
-					for(let k=0;k<persosTournoi[j].reussitesParTour.length;k++){
-						msgRes += " -> " + persosTournoi[j].reussitesParTour[k];
+					for(let k=0;k<currPerso.reussitesParTour.length;k++){
+						msgRes += " -> " + currPerso.reussitesParTour[k] + " " + marqueurReussites;
 					}
-					msgRes += "\n";
+					msgRes += " --- Total = " + currPerso.nbReussitesTotal + "\n";
 				}
 				else{
 					msgRes += currRes.nbReussites + " réussites pour "+ currRes.perso.nom + " " + marqueurReussites + "\n";
