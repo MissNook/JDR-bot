@@ -157,11 +157,11 @@ function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 				}else if(currRes.nbReussites >=3){
 					marqueurReussites = emoteBonResultat;
 				}
-				
+
 				if(modeColonnes){
 					msgRes += currRes.perso.nom;
 					for(let k=0;k<currPerso.reussitesParTour.length;k++){
-						msgRes += " -> " + currPerso.reussitesParTour[k] + " " + marqueurReussites;
+						msgRes += "\t -> " + currPerso.reussitesParTour[k] + " " + marqueurReussites;
 					}
 					msgRes += " --- Total = " + currPerso.nbReussitesTotal + "\n";
 				}
