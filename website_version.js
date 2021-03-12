@@ -31,7 +31,7 @@ function simulerTournoiIleMonstres(){
     let formulaireTournoi = document.forms["formTournoiIleMonstres"];     
     let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "type"); 
     if(elementsTournoi.hasErreur) return;
-    if (elementsTournoi.typeTournoi == "mat_tombe" && elementsTournoi.persoChoisis == ""){
+    if (elementsTournoi.typeTournoi == "mat_tombe" && elementsTournoi.persoChoisis == "personne"){
         erreurSpan.innerHTML = "Attention, il faut entrer au moins un nom de personnage pour cette action."
         return;
     }
@@ -141,4 +141,7 @@ function clearResultat(){
 //obligé de faire comme ça car le module n'est pas visible dans le HTML contrairement à un code JS standard
 document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
 document.getElementById("btnValiderFormTournoiIM").onclick = simulerTournoiIleMonstres;
-document.getElementById("btnClearEmbedTournoi").onclick = initEmbed;
+var clearEmbedBtns = document.getElementsByName("btnClearEmbedTournoi");
+for(let i=0;i<clearEmbedBtns.length;i++){
+    clearEmbedBtns[i].onclick = initEmbed;
+}

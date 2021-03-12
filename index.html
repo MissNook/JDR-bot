@@ -35,11 +35,11 @@
             <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
             <input type="text" id="nbConcurrents" name="nbConcurrents" size="1"><br>
             <input id="btnValiderFormTournoiComp" type="button" onclick="" value="Lancer le tournoi !">
-            <input id="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
+            <input name="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
         </form>     
         <h3>Les tournois de l'île des monstres</h3>
         <form name="formTournoiIleMonstres" action="#">
-          <input type="radio" id="mat" name="type" value="com" checked="checked">
+          <input type="radio" id="mat" name="type" value="mat" checked="checked">
           <label for="mat">Mat</label><br>
           <input type="radio" id="mat_tombe" name="type" value="mat_tombe">
           <label for="mat_tombe">Tombée du mat</label><br>
@@ -48,7 +48,7 @@
           <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
           <input type="text" id="nbConcurrentsIM" name="nbConcurrents" size="1"><br>
           <input id="btnValiderFormTournoiIM" type="button" onclick="" value="Lancer le tournoi !">
-          <input id="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
+          <input name="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
       </form>    
         <span class="error" id="erreur"></span><br>    
         <div id="resultat" style="display: none;">
