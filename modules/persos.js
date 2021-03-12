@@ -50,17 +50,17 @@ function createTabPersos(){
 
 function getTabPersosCategories(){
 	let categoriesPersos = { uniques : [], types : []};
-	tableauPersos.sort();
+	tabPersos.sort();
 	let previousPerso;
 	let currPerso;
-	for(let i=0;i<tableauPersos.length;i++){
-		currPerso = tableauPersos[i];
+	for(let i=0;i<tabPersos.length;i++){
+		currPerso = tabPersos[i];
 		if(i==0) continue;
 		if(currPerso.unique){
-			categoriesPersos.uniques.push({idPerso : tabPersos.idPerso , nom :tabPersos.nom});
+			categoriesPersos.uniques.push({idPerso : currPerso.idPerso , nom :currPerso.nom});
 		}
 		else{
-			previousPerso = tableauPersos[i-1];
+			previousPerso = tabPersos[i-1];
 			let prevNomSansSuffixe = previousPerso.nom.split("_")[0];
 			let currNomSansSuffixe = currPerso.nom.split("_")[0];
 			if(currNomSansSuffixe == prevNomSansSuffixe && categoriesPersos.types.indexOf(currNomSansSuffixe) == -1){
