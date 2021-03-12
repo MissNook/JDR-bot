@@ -90,6 +90,7 @@ function createListeEquipes(){
         listeUniques.add(optionListe);
     }
     listeUniques.selectedIndex = 0;
+    divEquipes.appendChild(listeUniques);
 }
 
 function afficherEmbedDansHTML(embedsToShow){
