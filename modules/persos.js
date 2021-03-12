@@ -55,11 +55,10 @@ function getTabPersosCategories(){
 	let currPerso;
 	for(let i=0;i<tabPersos.length;i++){
 		currPerso = tabPersos[i];
-		if(i==0) continue;
 		if(currPerso.unique){
 			categoriesPersos.uniques.push({idPerso : currPerso.idPerso , nom :currPerso.nom});
 		}
-		else{
+		else{			
 			previousPerso = tabPersos[i-1];
 			let prevNomSansSuffixe = previousPerso.nom.split("_")[0];
 			let currNomSansSuffixe = currPerso.nom.split("_")[0];
