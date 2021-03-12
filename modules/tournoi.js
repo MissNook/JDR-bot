@@ -145,19 +145,19 @@ function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 				let currPerso = persosTournoi[j];
 				if(typeof currPerso.nbReussitesTotal == "undefined"){
 					currPerso.reussitesParTour = [];
-					currPerso.reussitesParTour.push(currRes.nbReussites)
 					currPerso.nbReussitesTotal = currRes.nbReussites;
 				}
 				else{
 					currPerso.nbReussitesTotal += currRes.nbReussites;
-					let lastTour = currPerso.reussitesParTour[currPerso.tours.length-1];				
-					currPerso.reussitesParTour.push(currRes.nbReussites);
-				}
+				}			
+				currPerso.reussitesParTour.push(currRes.nbReussites);
+
 				if(currRes.nbReussites >=5){
 					marqueurReussites = emoteTresBonResultat;
 				}else if(currRes.nbReussites >=3){
 					marqueurReussites = emoteBonResultat;
 				}
+				
 				if(modeColonnes){
 					msgRes += currRes.perso.nom;
 					for(let k=0;k<currPerso.reussitesParTour.length;k++){
