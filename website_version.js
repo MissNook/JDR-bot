@@ -19,7 +19,7 @@ const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 
 function simulerTournoiCompetence(){
     clearResultat();  
-	embedMessage.spliceFields(0, embedMessage.fields.length);
+	embedMessage.fields.splice(0, embedMessage.fields.length);
     let formulaireTournoi = document.forms["formTournoiComp"];     
     let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "competence"); 
     if(elementsTournoi.hasErreur) return;
