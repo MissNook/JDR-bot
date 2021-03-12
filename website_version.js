@@ -19,28 +19,50 @@ const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 
 function simulerTournoiCompetence(){
     clearResultat();
-    let formulaireTournoi = document.forms["formTournoiComp"];  
-    let typeTournoiBtns = formulaireTournoi["competence"];
-    let typeTournoi = "";
+    let formulaireTournoi = document.forms["formTournoiComp"];     
+    let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "competence"); 
+    if(elementsTournoi.hasErreur) return;
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents);
+    afficherEmbedDansHTML([returnedEmbed]);
+}
+
+function simulerTournoiIleMonstres(){
+    clearResultat();
+    let formulaireTournoi = document.forms["formTournoiIleMonstres"];     
+    let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "type"); 
+    if(elementsTournoi.hasErreur) return;
+    if (elementsTournoi.typeTournoi == "mat_tombe" && elementsTournoi.persoChoisis == ""){
+        erreurSpan.innerHTML = "Attention, il faut entrer au moins un nom de personnage pour cette action."
+        return;
+    }
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents);
+    afficherEmbedDansHTML([returnedEmbed]);
+}
+
+function getStandardElementsTournoi(formulaireTournoi, nomListChoix){
+    let elementsTournoi = {};
+    let persoChoisis = formulaireTournoi["persosChoisis"].value;
+    persoChoisis = persoChoisis.trim().length ==0 ? "personne" : persoChoisis.trim();
+    elementsTournoi.persoChoisis = persoChoisis;    
+    elementsTournoi.nbConcurrents =  parseInt(formulaireTournoi["nbConcurrents"].value);
+    if(elementsTournoi.nbConcurrents < 1 || elementsTournoi.nbConcurrents > 6){
+        erreurSpan.innerHTML = "Attention, le nombre de concurrents doit être compris entre 1 et 6."
+        elementsTournoi.hasErreur = true;
+        return;
+    }
+    elementsTournoi.persosCombat = [];		
+	if(persoChoisis != "personne") {
+		elementsTournoi.persosCombat = PersoModule.getPersosFromArgs(persoChoisis, TournoiModule.persosTournoi);	
+	}
+    elementsTournoi.typeTournoi = "";    
+    let typeTournoiBtns = formulaireTournoi[nomListChoix];
     for(let  i=0;i<typeTournoiBtns.length;i++){
         if(typeTournoiBtns[i].checked){
-            typeTournoi = typeTournoiBtns[i].value;
+            elementsTournoi.typeTournoi = typeTournoiBtns[i].value;
             break;
         }
     }
-    let persoChoisis = formulaireTournoi["persosChoisis"].value;
-    persoChoisis = persoChoisis.trim().length ==0 ? "personne" : persoChoisis.trim();
-    let nbConcurrents =  parseInt(formulaireTournoi["nbConcurrents"].value);
-    if(nbConcurrents < 1 || nbConcurrents > 6){
-        erreurSpan.innerHTML = "Attention, le nombre de concurrents doit être compris entre 1 et 6."
-        return;
-    }
-    let persosCombat = [];		
-	if(persoChoisis != "personne") {
-		persosCombat = PersoModule.getPersosFromArgs(persoChoisis, TournoiModule.persosTournoi);	
-	}
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, typeTournoi, persosCombat, nbConcurrents);
-    afficherEmbedDansHTML([returnedEmbed]);
+    return elementsTournoi;
 }
 
 function afficherEmbedDansHTML(embedsToShow){
@@ -106,6 +128,7 @@ function initEmbed(){
 }
 
 function clearResultat(){
+    let divResultat = document.getElementById("resultat");
     let titreRes = document.getElementById("TitreRes");
     let descRes = document.getElementById("DescriptionRes");
     let fieldsRes = document.getElementById("fieldsRes");
@@ -117,4 +140,5 @@ function clearResultat(){
 
 //obligé de faire comme ça car le module n'est pas visible dans le HTML contrairement à un code JS standard
 document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
-document.getElementById("btnClearEmbedTournoiComp").onclick = initEmbed;
+document.getElementById("btnValiderFormTournoiIM").onclick = simulerTournoiIleMonstres;
+document.getElementById("btnClearEmbedTournoi").onclick = initEmbed;
