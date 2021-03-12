@@ -67,7 +67,7 @@ function getStandardElementsTournoi(formulaireTournoi, nomListChoix){
 }
 
 function createListeEquipes(){
-    let divEquipes = document.getElementById("equipes");
+    let formEquipes =  document.forms["choixEquipes"]; 
     let categories = PersoModule.getTabPersosCategories();
     let i;
     for(i=0;i<categories.types.length;i++){
@@ -78,9 +78,10 @@ function createListeEquipes(){
         let label = document.createElement("label");
         label.setAttribute("for", checkbox.id);
         label.innerText = checkbox.value;
-        divEquipes.appendChild(checkbox);
-        divEquipes.appendChild(label);
+        formEquipes.appendChild(checkbox);
+        formEquipes.appendChild(label);
     }
+    formEquipes.innerHTML += "<br>"
     let listeUniques = document.createElement("select");
     listeUniques.id = "listeUniques";
     for(i=0;i<categories.uniques.length;i++){
@@ -90,7 +91,7 @@ function createListeEquipes(){
         listeUniques.add(optionListe);
     }
     listeUniques.selectedIndex = 0;
-    divEquipes.appendChild(listeUniques);
+    formEquipes.appendChild(listeUniques);
 }
 
 function afficherEmbedDansHTML(embedsToShow){
