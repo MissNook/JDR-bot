@@ -18,11 +18,12 @@ const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae2
 const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 
 function simulerTournoiCompetence(){
-    clearResultat();
+    clearResultat();  
+	embedMessage.spliceFields(0, embedMessage.fields.length);
     let formulaireTournoi = document.forms["formTournoiComp"];     
     let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "competence"); 
     if(elementsTournoi.hasErreur) return;
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents);
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,false,true);
     afficherEmbedDansHTML([returnedEmbed]);
 }
 

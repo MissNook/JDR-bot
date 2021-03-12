@@ -41,7 +41,7 @@ function getInfoAffichageTournoi(typeTournoi){
 	return infoTournoi;	
 }
 
-function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, afficherDegats){	
+function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, modeColonnes){	
 	//simuler tournoi d'un type
 	embedMessageTournoi.setTitle("Tournoi " + getInfoAffichageTournoi(typeTournoi).nomTournoi);	
 	embedMessageTournoi.setColor("#aef2ea");
@@ -50,14 +50,14 @@ function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcur
 	switch(typeTournoi){
 		case "mat" :
 		case "mat_tombe":
-			embedMessageTournoi = simulerTournoiMonteeDuMat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents);
+			embedMessageTournoi = simulerTournoiMonteeDuMat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit);
 			break;
 		case "com" :
 		case "agi" :
 		case "vig" :
 		case "esp" :
 		case "sen" :
-			embedMessageTournoi = simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit);
+			embedMessageTournoi = simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit, modeColonnes);
 			break;
 	}	
 	return embedMessageTournoi;
@@ -74,8 +74,7 @@ function initPersosTournoi(persosCombat, nbConcurrents, nomsPersosAcceptes){
 function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit){
 	if(forInit || persosTournoi.length == 0){
 		console.log("*************MAT INIT:");		
-		initPersosTournoi(persosCombat, nbConcurrents, ["Combattant", "Gabier"])
-		
+		initPersosTournoi(persosCombat, nbConcurrents, ["Combattant", "Gabier"]);		
 		//init des placements au sol et de la place gagnante
 		for(let i=0;i<persosTournoi.length;i++){
 			persosTournoi[i].placement = 0;
@@ -83,7 +82,6 @@ function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosComba
 		}
 		positionGagnant = 1;
 		console.log("persosTournoi:" + getStrNomsPersos(persosTournoi));		
-		//embedMessageTournoi.addField(nbConcurrents + " participants : " + getStrNomsPersos(persosTournoi), getMatAvecPersosPlaces(true));
 	}
 	
 	if(typeTournoi == "mat"){	
@@ -99,17 +97,17 @@ function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosComba
 	return embedMessageTournoi;
 }
 
-function simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit){
+function simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit, modeColonnes){
 	console.log("simulerTournoiSurUneStat");
 	if(forInit || persosTournoi.length == 0){
 		initTournoiSurUneStat(typeTournoi, persosCombat,nbConcurrents);
-	}
+	}	
 	let resTest = testOpposition(persosTournoi,typeTournoi, persosTournoi.length, embedMessageTournoi);
 	let infoTournoi = getInfoAffichageTournoi(typeTournoi);	
 	if(infoTournoi.emote != ""){
 		embedMessageTournoi.title = infoTournoi.emote + embedMessageTournoi.title + infoTournoi.emote;
 	}
-	let msgRes = getMessageResultatTournoiSurUneStat(resTest, infoTournoi);
+	let msgRes = getMessageResultatTournoiSurUneStat(resTest, modeColonnes);
 	embedMessageTournoi.addField("Résultat du tour des " + infoTournoi.nomParticipants, msgRes);
 
 	return embedMessageTournoi;
@@ -137,7 +135,7 @@ function initTournoiSurUneStat(typeTournoi, persosCombat, nbConcurrents){
 	initPersosTournoi(persosCombat, nbConcurrents, nomsAcceptes)
 }
 
-function getMessageResultatTournoiSurUneStat(resTests, infoTournoi){
+function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 	let msgRes = "";
 	for(let i=0;i<resTests.length;i++){
 		let currRes = resTests[i];
@@ -145,17 +143,30 @@ function getMessageResultatTournoiSurUneStat(resTests, infoTournoi){
 			if(currRes.perso.idPerso == persosTournoi[j].idPerso){
 				let marqueurReussites = "";
 				if(typeof persosTournoi[j].nbReussitesTotal == "undefined"){
+					persosTournoi[j].reussitesParTour = [];
+					persosTournoi[j].reussitesParTour.push(currRes.nbReussites)
 					persosTournoi[j].nbReussitesTotal = currRes.nbReussites;
 				}
 				else{
 					persosTournoi[j].nbReussitesTotal += currRes.nbReussites;
+					let lastTour = persosTournoi[j].reussitesParTour[persosTournoi[j].tours.length-1];				
+					persosTournoi[j].reussitesParTour.push(currRes.nbReussites);
 				}
 				if(currRes.nbReussites >=5){
 					marqueurReussites = emoteTresBonResultat;
 				}else if(currRes.nbReussites >=3){
 					marqueurReussites = emoteBonResultat;
 				}
-				msgRes += currRes.nbReussites + " réussites pour "+ currRes.perso.nom + " " + marqueurReussites + "\n";
+				if(modeColonnes){
+					msgRes += currRes.perso.nom;
+					for(let k=0;k<persosTournoi[j].reussitesParTour.length;k++){
+						msgRes += " -> " + persosTournoi[j].reussitesParTour[k];
+					}
+					msgRes += "\n";
+				}
+				else{
+					msgRes += currRes.nbReussites + " réussites pour "+ currRes.perso.nom + " " + marqueurReussites + "\n";
+				}
 			}
 		}		
 	}
