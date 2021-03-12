@@ -108,12 +108,16 @@ function changeEmojiIntoSvg(textToCheck){
                     break;                 
                 }
             }
-            if(!hasEmoji) innerHTML += splitText[i];
+            if(!hasEmoji) innerHTML += addMarginForTab(splitText[i]);
         }
     }else{
         innerHTML += splitText[0];
     }
     return innerHTML;
+}
+
+function addMarginForTab(text){
+    return text.replace(/\t/g, '<span class="tabulation"/>');
 }
 
 function initEmbed(){
