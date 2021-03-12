@@ -85,6 +85,7 @@ function afficherEmbedDansHTML(embedsToShow){
             fieldsRes.appendChild(span2);
         }
     }
+    fieldsRes.innerHTLM += "<br>"
     divResultat.style.display = "block";
 }
 
