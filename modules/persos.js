@@ -14,31 +14,31 @@ function createTabPersos(){
 	let tableauPersos = [];
 	
 	//createPerso(nom, com, agi, vig, esp, sen, def, defSpe, pv, pvMax, mana, lvl, special, armes){	
-	tableauPersos.push(createPerso("Fredro",4,2,5,1,2,1,1,26,26,7,5, [getSpecialInfo("Torgnole")], [getArmesEtTalentsInfo("Bras mécanique")]));
-	tableauPersos.push(createPerso("MouetteGéante",2,3,2,0,3,0,0,6,6,0,1,null,[getArmesEtTalentsInfo("Frappe")]));
-	tableauPersos.push(createPerso("BernardLHermite",3,1,3,0,1,3,1,6,6,0,1,null,[getArmesEtTalentsInfo("Frappe")]));
-	tableauPersos.push(createPerso("Espadon",2,2,2,0,1,2,0,12,12,0,1,[getSpecialInfo("Dissimulation")], [getArmesEtTalentsInfo("Frappe moyenne")]));
-	tableauPersos.push(createPerso("CombattantD",3,2,2,0,1,0,0,15,15,0,1,null,[getArmesEtTalentsInfo("Sabre")])); //COM
-	tableauPersos.push(createPerso("CombattantC",3,3,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Sabre")]));//COM + AGI
-	tableauPersos.push(createPerso("CombattantB",4,2,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Sabre")]));//COM
-	tableauPersos.push(createPerso("CombattantA",4,3,2,0,1,0,0,20,20,0,3,null,[getArmesEtTalentsInfo("Sabre")]));//COM + AGI
-	tableauPersos.push(createPerso("CombattantE",5,2,2,0,1,0,0,25,25,0,5,null,[getArmesEtTalentsInfo("Sabre")]));//COM
-	tableauPersos.push(createPerso("GabierA",3,4,2,0,1,0,0,20,20,0,3,null,[getArmesEtTalentsInfo("Dague")]));
-	tableauPersos.push(createPerso("GabierB",3,3,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")]));
-	tableauPersos.push(createPerso("CombattantF",3,1,3,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")])); //vigoureux
-	tableauPersos.push(createPerso("ArcherA",1,2,1,0,3,0,0,15,15,0,1,null,[getArmesEtTalentsInfo("Arc")])); //SEN
-	tableauPersos.push(createPerso("ArcherB",1,2,1,0,3,1,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + DEF
-	tableauPersos.push(createPerso("ArcherC",1,3,1,0,3,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + AGI
-	tableauPersos.push(createPerso("ArcherD",1,2,1,0,5,0,0,20,20,0,5,null,[getArmesEtTalentsInfo("Arc")])); //SEN
-	tableauPersos.push(createPerso("ArcherE",1,2,1,0,4,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Arc")])); //SEN
-	tableauPersos.push(createPerso("ArcherF",1,2,1,2,4,0,0,20,20,0,4,null,[getArmesEtTalentsInfo("Arc")])); //SEN + ESP
-	tableauPersos.push(createPerso("ArcherF",3,2,1,2,3,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Arc")])); //SEN + COM
-	tableauPersos.push(createPerso("MageA",1,2,1,3,3,0,0,15,15,15,3,null,[getArmesEtTalentsInfo("Dague")])); //ESP + SEN
-	tableauPersos.push(createPerso("MageB",1,2,1,3,1,0,2,15,15,15,2,null,[getArmesEtTalentsInfo("Dague")])); //ESP + DEFSPE
-	tableauPersos.push(createPerso("MageC",1,3,1,4,1,0,0,15,15,20,3,null,[getArmesEtTalentsInfo("Dague")])); //ESP 
-	tableauPersos.push(createPerso("MageD",3,2,1,3,1,0,0,20,20,20,4,null,[getArmesEtTalentsInfo("Dague")])); //ESP + COM
-	tableauPersos.push(createPerso("MageE",1,2,1,5,1,0,0,15,15,20,5,null,[getArmesEtTalentsInfo("Dague")])); //ESP
-	tableauPersos.push(createPerso("MageF",1,2,1,3,4,1,1,15,15,20,2,null,[getArmesEtTalentsInfo("Dague")])); //ESP + DEF + DEFSPE
+	tableauPersos.push(createPerso("Fredro",4,2,5,1,2,1,1,26,26,7,5, [getSpecialInfo("Torgnole")], [getArmesEtTalentsInfo("Bras mécanique")],true));
+	tableauPersos.push(createPerso("MouetteGéante",2,3,2,0,3,0,0,6,6,0,1,null,[getArmesEtTalentsInfo("Frappe")],true));
+	tableauPersos.push(createPerso("BernardLHermite",3,1,3,0,1,3,1,6,6,0,1,null,[getArmesEtTalentsInfo("Frappe")],true));
+	tableauPersos.push(createPerso("Espadon",2,2,2,0,1,2,0,12,12,0,1,[getSpecialInfo("Dissimulation")], [getArmesEtTalentsInfo("Frappe moyenne")], true));
+	tableauPersos.push(createPerso("Combattant_D",3,2,2,0,1,0,0,15,15,0,1,null,[getArmesEtTalentsInfo("Sabre")])); //COM
+	tableauPersos.push(createPerso("Combattant_C",3,3,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Sabre")]));//COM + AGI
+	tableauPersos.push(createPerso("Combattant_B",4,2,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Sabre")]));//COM
+	tableauPersos.push(createPerso("Combattant_A",4,3,2,0,1,0,0,20,20,0,3,null,[getArmesEtTalentsInfo("Sabre")]));//COM + AGI
+	tableauPersos.push(createPerso("Combattant_E",5,2,2,0,1,0,0,25,25,0,5,null,[getArmesEtTalentsInfo("Sabre")]));//COM
+	tableauPersos.push(createPerso("Combattant_F",3,1,3,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")])); //vigoureux
+	tableauPersos.push(createPerso("Gabier_A",3,4,2,0,1,0,0,20,20,0,3,null,[getArmesEtTalentsInfo("Dague")]));
+	tableauPersos.push(createPerso("Gabier_B",3,3,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")]));
+	tableauPersos.push(createPerso("Archer_A",1,2,1,0,3,0,0,15,15,0,1,null,[getArmesEtTalentsInfo("Arc")])); //SEN
+	tableauPersos.push(createPerso("Archer_B",1,2,1,0,3,1,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + DEF
+	tableauPersos.push(createPerso("Archer_C",1,3,1,0,3,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + AGI
+	tableauPersos.push(createPerso("Archer_D",1,2,1,0,5,0,0,20,20,0,5,null,[getArmesEtTalentsInfo("Arc")])); //SEN
+	tableauPersos.push(createPerso("Archer_E",1,2,1,0,4,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Arc")])); //SEN
+	tableauPersos.push(createPerso("Archer_F",1,2,1,2,4,0,0,20,20,0,4,null,[getArmesEtTalentsInfo("Arc")])); //SEN + ESP
+	tableauPersos.push(createPerso("Archer_G",3,2,1,2,3,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Arc")])); //SEN + COM
+	tableauPersos.push(createPerso("Mage_A",1,2,1,3,3,0,0,15,15,15,3,null,[getArmesEtTalentsInfo("Dague")])); //ESP + SEN
+	tableauPersos.push(createPerso("Mage_B",1,2,1,3,1,0,2,15,15,15,2,null,[getArmesEtTalentsInfo("Dague")])); //ESP + DEFSPE
+	tableauPersos.push(createPerso("Mage_C",1,3,1,4,1,0,0,15,15,20,3,null,[getArmesEtTalentsInfo("Dague")])); //ESP 
+	tableauPersos.push(createPerso("Mage_D",3,2,1,3,1,0,0,20,20,20,4,null,[getArmesEtTalentsInfo("Dague")])); //ESP + COM
+	tableauPersos.push(createPerso("Mage_E",1,2,1,5,1,0,0,15,15,20,5,null,[getArmesEtTalentsInfo("Dague")])); //ESP
+	tableauPersos.push(createPerso("Mage_F",1,2,1,3,4,1,1,15,15,20,2,null,[getArmesEtTalentsInfo("Dague")])); //ESP + DEF + DEFSPE
 
 	
 	//Identifiant unique à chaque perso
@@ -46,6 +46,29 @@ function createTabPersos(){
 		tableauPersos[i].idPerso = i;
 	}
 	return tableauPersos;
+}
+
+function getTabPersosCategories(){
+	let categoriesPersos = { uniques : [], types : []};
+	tableauPersos.sort();
+	let previousPerso;
+	let currPerso;
+	for(let i=0;i<tableauPersos.length;i++){
+		currPerso = tableauPersos[i];
+		if(i==0) continue;
+		if(currPerso.unique){
+			categoriesPersos.uniques.push({idPerso : tabPersos.idPerso , nom :tabPersos.nom});
+		}
+		else{
+			previousPerso = tableauPersos[i-1];
+			let prevNomSansSuffixe = previousPerso.nom.split("_")[0];
+			let currNomSansSuffixe = currPerso.nom.split("_")[0];
+			if(currNomSansSuffixe == prevNomSansSuffixe && categoriesPersos.types.indexOf(currNomSansSuffixe) == -1){
+				categoriesPersos.types.push(currNomSansSuffixe);
+			}
+		}
+	}
+	return categoriesPersos;
 }
 function fillTabArmesTalents(){
 	//dégats correspond au type de dé (8 pour d8)
@@ -75,12 +98,14 @@ function fillTabSpecial(){
 }
 
 // special est à null s'il n'y en a pas, les stats sont à 0 dans le même cas
-function createPerso(nom, com, agi, vig, esp, sen, def, defSpe, pv, pvMax, mana, lvl, special, armes){	
+function createPerso(nom, com, agi, vig, esp, sen, def, defSpe, pv, pvMax, mana, lvl, special, armes, isUnique){
+	if(!isUnique) isUnique = false;	
 	return {nom:nom,
 		stats : {com : com, agi :agi, vig :vig, esp: esp, sen :sen, def :def, defSpe:defSpe, pvMax :pvMax, manaMax : mana, lvl:lvl },
 		statsTemp : {com : com, agi :agi, vig :vig, esp: esp, sen :sen, def :def, defSpe:defSpe, pv : pv, mana : mana},		
 		special : special,
-		armes : armes};
+		armes : armes,
+		unique : isUnique};
 }
 
 function getRandomPersos(nbRandomPersos, nomsPersosAcceptes){
@@ -190,4 +215,4 @@ function getArmesEtTalentsInfo(nomArme){
 	return null;
 }
 
-export { tabPersos, getRandomPersos, getStrNomsPersos, getPersosFromArgs };
+export { tabPersos, getRandomPersos, getStrNomsPersos, getPersosFromArgs, getTabPersosCategories };

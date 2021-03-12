@@ -66,6 +66,32 @@ function getStandardElementsTournoi(formulaireTournoi, nomListChoix){
     return elementsTournoi;
 }
 
+function createListeEquipes(){
+    let divEquipes = document.getElementById("equipes");
+    let categories = PersoModule.getTabPersosCategories();
+    let i;
+    for(i=0;i<categories.types.length;i++){
+        let checkbox = document.createElement("input");
+        checkbox.type = "checkbox";
+        checkbox.value = categories.types[i];
+        checkbox.id = "cb_" +i;
+        let label = document.createElement("label");
+        label.setAttribute("for", checkbox.id);
+        label.innerText = checkbox.value;
+        divEquipes.appendChild(checkbox);
+        divEquipes.appendChild(label);
+    }
+    let listeUniques = document.createElement("select");
+    listeUniques.id = "listeUniques";
+    for(i=0;i<categories.uniques.length;i++){
+        let optionListe = document.createElement("option");
+        optionListe.text = categories.uniques[i].nom;
+        optionListe.value = categories.uniques[i].idPerso;
+        listeUniques.add(optionListe);
+    }
+    listeUniques.selectedIndex = 0;
+}
+
 function afficherEmbedDansHTML(embedsToShow){
     let divResultat = document.getElementById("resultat");
     let titreRes = document.getElementById("TitreRes");
@@ -151,3 +177,4 @@ var clearEmbedBtns = document.getElementsByName("btnClearEmbedTournoi");
 for(let i=0;i<clearEmbedBtns.length;i++){
     clearEmbedBtns[i].onclick = initEmbed;
 }
+createListeEquipes();
