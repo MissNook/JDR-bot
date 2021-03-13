@@ -227,13 +227,13 @@ function formatPersoInHTML(perso){
 
     let i=0;
     let nomsSpecial = "";
-    if(typeof perso.special !== "undefined" && perso.special.length>0){
+    if(typeof perso.special !== "undefined" && perso.special !== null && perso.special.length>0){
         for(i=0;i<perso.special.length;i++){ 
             nomsSpecial += perso.special[i].nom;
         }
     }
     let nomsArmes = "";
-    if(typeof perso.armes !== "undefined" && perso.armes.length>0){
+    if(typeof perso.armes !== "undefined" && perso.armes !== null && perso.armes.length>0){
         for(i=0;i<perso.armes.length;i++){ 
             nomsArmes += perso.armes[i].nom;
         }
