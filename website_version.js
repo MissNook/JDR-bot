@@ -160,7 +160,7 @@ function changeEmojiIntoSvg(textToCheck){
             if(!hasEmoji) innerHTML += addMarginForTab(splitText[i]);
         }
     }else{
-        innerHTML += splitText[0];
+        innerHTML += addMarginForTab(splitText[0]);
     }
     return innerHTML;
 }
