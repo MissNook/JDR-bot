@@ -25,6 +25,7 @@ function simulerTournoiCompetence(){
     let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "competence"); 
     if(elementsTournoi.hasErreur) return;
     let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit,true);
+    forInit = false;
     afficherEmbedDansHTML([returnedEmbed]);
 }
 
@@ -38,6 +39,7 @@ function simulerTournoiIleMonstres(){
         return;
     }
     let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit);
+    forInit = false;
     afficherEmbedDansHTML([returnedEmbed]);
 }
 
