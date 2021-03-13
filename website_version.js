@@ -200,6 +200,7 @@ function clearResultat(){
 function createDivPersos(){
     let divPersos = document.getElementById("persosExistants");        
     let tablePerso = document.createElement("table");
+    tablePerso.className = "tablePerso";
     tablePerso.innerHTML = '<tr><th>Nom</th><th colspan="10">Stats</th><th>Special</th><th>Armes</th><th>Unique</th></tr>';
     tablePerso.innerHTML += '<tr><th></th><th>COM</th><th>AGI</th><th>VIG</th><th>ESP</th><th>SEN</th><th>DEF</th><th>DefSPE</th><th>PV</th><th>Mana</th><th>Niveau</th><th></th><th></th><th></th></tr>';
     for(let i=0;i<PersoModule.tabPersos.length;i++){ 
@@ -211,7 +212,7 @@ function createDivPersos(){
 
 function formatPersoInHTML(perso){ 
     let ligneTable =  document.createElement("tr");
-    let textHTML = "<td>#nom</td><td>#com</td><td>#agi</td><td>#vig</td><td>#esp</td><td>#sen</td><td>#def</td><td>#defspe</td><td>#pv</td><td>#mana</td><td>#lvl</td><td>#special</td><td>#armes</td><td>#unique</td>";
+    let textHTML = "<td class='leftAlign'>#nom</td><td>#com</td><td>#agi</td><td>#vig</td><td>#esp</td><td>#sen</td><td>#def</td><td>#defspe</td><td>#pv</td><td>#mana</td><td>#lvl</td><td>#special</td><td>#armes</td><td>#unique</td>";
     textHTML = textHTML.replace("#nom",perso.nom);
     textHTML = textHTML.replace("#com",perso.stats.com);
     textHTML = textHTML.replace("#agi",perso.stats.agi);
@@ -226,15 +227,15 @@ function formatPersoInHTML(perso){
 
     let i=0;
     let nomsSpecial = "";
-    if(typeof perso.stats.special !== "undefined" && perso.stats.special.length>0){
-        for(i=0;i<perso.stats.special.length;i++){ 
-            nomsSpecial += perso.stats.special[i].nom;
+    if(typeof perso.special !== "undefined" && perso.special.length>0){
+        for(i=0;i<perso.special.length;i++){ 
+            nomsSpecial += perso.special[i].nom;
         }
     }
     let nomsArmes = "";
-    if(typeof perso.stats.armes !== "undefined" && perso.stats.armes.length>0){
-        for(i=0;i<perso.stats.armes.length;i++){ 
-            nomsArmes += perso.stats.armes[i].nom;
+    if(typeof perso.armes !== "undefined" && perso.armes.length>0){
+        for(i=0;i<perso.armes.length;i++){ 
+            nomsArmes += perso.armes[i].nom;
         }
     }  
     textHTML = textHTML.replace("#special", nomsSpecial);
