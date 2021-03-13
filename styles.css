@@ -37,6 +37,19 @@ td.leftAlign{
     border-collapse: collapse;
 }
 
-.tablePerso > td, th{
+.tablePerso > th{
     border: 1px solid black;
+}
+td{
+    border: 1px solid black;
+    padding:5px;
+}
+input[type="button"]{
+    margin-left: 40%;
+    background-color: #0075FF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px 5px 10px;
+    font-weight: bold;
 }
