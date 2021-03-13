@@ -181,11 +181,13 @@ function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 }
 
 function getMarqueurReussite(nbReussites){
+	let marqueurReussites = "";
 	if(nbReussites >=5){
 		marqueurReussites = emoteTresBonResultat;
 	}else if(nbReussites >=3){
 		marqueurReussites = emoteBonResultat;
 	}
+	return marqueurReussites;
 }
 
 function sortResTest(res1, res2){
