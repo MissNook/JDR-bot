@@ -41,7 +41,7 @@ function getInfoAffichageTournoi(typeTournoi){
 	return infoTournoi;	
 }
 
-function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, modeColonnes){	
+function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, nomsAcceptes, modeColonnes){	
 	//simuler tournoi d'un type
 	embedMessageTournoi.setTitle("Tournoi " + getInfoAffichageTournoi(typeTournoi).nomTournoi);	
 	embedMessageTournoi.setColor("#aef2ea");
@@ -50,14 +50,14 @@ function simulerTournoi(embedMessageTournoi, typeTournoi, persosCombat, nbConcur
 	switch(typeTournoi){
 		case "mat" :
 		case "mat_tombe":
-			embedMessageTournoi = simulerTournoiMonteeDuMat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit);
+			embedMessageTournoi = simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit , nomsAcceptes);
 			break;
 		case "com" :
 		case "agi" :
 		case "vig" :
 		case "esp" :
 		case "sen" :
-			embedMessageTournoi = simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit, modeColonnes);
+			embedMessageTournoi = simulerTournoiSurUneStat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, nomsAcceptes, modeColonnes);
 			break;
 	}	
 	return embedMessageTournoi;
@@ -71,10 +71,14 @@ function initPersosTournoi(persosCombat, nbConcurrents, nomsPersosAcceptes){
 	console.log("FIN Initialisation persos Tournoi : " + persosTournoi.length);
 }
 
-function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit){
+function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosCombat, nbConcurrents, forInit, nomsAcceptes){
 	if(forInit || persosTournoi.length == 0){
-		console.log("*************MAT INIT:");		
-		initPersosTournoi(persosCombat, nbConcurrents, ["Combattant", "Gabier"]);	
+		console.log("*************MAT INIT:");
+		let noms = ["Combattant", "Gabier"];
+		if(typeof nomsChoisis != "undefined" && nomsChoisis.length > 0){
+			noms = nomsAcceptes;
+		}
+		initPersosTournoi(persosCombat, nbConcurrents, noms);	
 		forInit = true;	
 		//init des placements au sol et de la place gagnante
 		for(let i=0;i<persosTournoi.length;i++){
@@ -98,11 +102,11 @@ function simulerTournoiMonteeDuMat(embedMessageTournoi, typeTournoi, persosComba
 	return embedMessageTournoi;
 }
 
-function simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit, modeColonnes){
+function simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, nbConcurrents, forInit, nomsAcceptes, modeColonnes){
 	console.log("simulerTournoiSurUneStat");
 	if(forInit || persosTournoi.length == 0){
 		forInit = true;
-		initTournoiSurUneStat(typeTournoi, persosCombat,nbConcurrents);
+		initTournoiSurUneStat(typeTournoi, persosCombat,nbConcurrents, nomsAcceptes);
 	}	
 	let resTest = testOpposition(persosTournoi,typeTournoi, persosTournoi.length, embedMessageTournoi);
 	let infoTournoi = getInfoAffichageTournoi(typeTournoi);	
@@ -115,24 +119,29 @@ function simulerTournoiSurUneStat(embedMessageTournoi,typeTournoi,persosCombat, 
 	return embedMessageTournoi;
 }
 
-function initTournoiSurUneStat(typeTournoi, persosCombat, nbConcurrents){
+function initTournoiSurUneStat(typeTournoi, persosCombat, nbConcurrents, nomsChoisis){
 	let nomsAcceptes;
-	switch(typeTournoi){
-		case "com" :
-			nomsAcceptes = ["Combattant", "Gabier"];
-			break;
-		case "agi" :
-			nomsAcceptes = ["Gabier"];
-			break;
-		case "vig" :
-			nomsAcceptes = ["Combattant"];
-			break;
-		case "esp" :
-			nomsAcceptes = ["Mage"];
-			break;
-		case "sen" :
-			nomsAcceptes = ["Archer"];
-			break;
+	if(typeof nomsChoisis != "undefined" && nomsChoisis.length > 0){
+		nomsAcceptes = nomsChoisis;
+	}
+	else{
+		switch(typeTournoi){
+			case "com" :
+				nomsAcceptes = ["Combattant", "Gabier"];
+				break;
+			case "agi" :
+				nomsAcceptes = ["Gabier"];
+				break;
+			case "vig" :
+				nomsAcceptes = ["Combattant"];
+				break;
+			case "esp" :
+				nomsAcceptes = ["Mage"];
+				break;
+			case "sen" :
+				nomsAcceptes = ["Archer"];
+				break;
+		}
 	}
 	initPersosTournoi(persosCombat, nbConcurrents, nomsAcceptes)
 }

@@ -19,50 +19,50 @@
     <div>
         <h1>JDR pirates - Les outils de piraterie !</h1>
         <h2>Les tournois</h2>                  
-        <h3>Le tournoi de compétences</h3>
+        <h3>Le tournoi de compétences</h3>      
+        <form name="formTournoiComp" action="#">
+            <input type="radio" id="combat" name="competence" value="com" checked="checked">
+            <label for="combat">Combat</label><br>
+            <input type="radio" id="agilite" name="competence" value="agi">
+            <label for="agilite">Agilité</label><br>
+            <input type="radio" id="vigueur" name="competence" value="vig">
+            <label for="vigueur">Vigueur</label><br>
+            <input type="radio" id="sens" name="competence" value="sen">
+            <label for="sens">Sens</label><br>
+            <input type="radio" id="esprit" name="competence" value="esp">
+            <label for="esprit">Esprit</label><br>
+            <label for="persosChoisis">Personnages choisis séparés par des virgules (laisser vide si aucun) :</label>
+            <input type="text" id="persosChoisis" name="persosChoisis" size="50"><br>
+            <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
+            <input type="text" id="nbConcurrents" name="nbConcurrents" size="1"><br>
+            <input id="btnValiderFormTournoiComp" type="button" onclick="" value="Lancer le tournoi !">
+            <input name="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
+            <input name="btnReinitTournoi" type="button" onclick="" value="Réinitialiser tournoi">
+        </form>          
+        <h3>Les tournois de l'île des monstres</h3>   
         <div class="grid-container">
-          <div class="grid-child">
-            <form name="formTournoiComp" action="#">
-                <input type="radio" id="combat" name="competence" value="com" checked="checked">
-                <label for="combat">Combat</label><br>
-                <input type="radio" id="agilite" name="competence" value="agi">
-                <label for="agilite">Agilité</label><br>
-                <input type="radio" id="vigueur" name="competence" value="vig">
-                <label for="vigueur">Vigueur</label><br>
-                <input type="radio" id="sens" name="competence" value="sen">
-                <label for="sens">Sens</label><br>
-                <input type="radio" id="esprit" name="competence" value="esp">
-                <label for="esprit">Esprit</label><br>
-                <label for="persosChoisis">Personnages choisis séparés par des virgules (laisser vide si aucun) :</label>
-                <input type="text" id="persosChoisis" name="persosChoisis" size="50"><br>
-                <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
-                <input type="text" id="nbConcurrents" name="nbConcurrents" size="1"><br>
-                <input id="btnValiderFormTournoiComp" type="button" onclick="" value="Lancer le tournoi !">
-                <input name="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
-                <input name="btnReinitTournoi" type="button" onclick="" value="Réinitialiser tournoi">
-            </form>  
+          <div class="grid-child">     
+            <form name="formTournoiIleMonstres" action="#">
+              <input type="radio" id="mat" name="type" value="mat" checked="checked">
+              <label for="mat">Mat</label><br>
+              <input type="radio" id="mat_tombe" name="type" value="mat_tombe">
+              <label for="mat_tombe">Tombée du mat</label><br>
+              <label for="persosChoisis">Personnages choisis séparés par des virgules (laisser vide si aucun) :</label>
+              <input type="text" id="persosChoisisIM" name="persosChoisis" size="50"><br>
+              <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
+              <input type="text" id="nbConcurrentsIM" name="nbConcurrents" size="1"><br>
+              <input id="btnValiderFormTournoiIM" type="button" onclick="" value="Lancer le tournoi !">
+              <input name="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
+              <input name="btnReinitTournoi" type="button" onclick="" value="Réinitialiser tournoi">
+            </form>    
           </div>
           <div class="grid-child" id="equipes">
-              <h3>Choix des personnages et équipes</h3>
-              <form name="choixEquipes" action="#">
-
-              </form>
+            <h3>Choix des équipes</h3>
+            <form name="choixEquipes" action="#"></form>
+            <input id="btnToggleDivPersos" type="button" value="˅">
+            <div id="persosExistants"  style="display: none;"></div>
           </div>
         </div>
-        <h3>Les tournois de l'île des monstres</h3>        
-        <form name="formTournoiIleMonstres" action="#">
-          <input type="radio" id="mat" name="type" value="mat" checked="checked">
-          <label for="mat">Mat</label><br>
-          <input type="radio" id="mat_tombe" name="type" value="mat_tombe">
-          <label for="mat_tombe">Tombée du mat</label><br>
-          <label for="persosChoisis">Personnages choisis séparés par des virgules (laisser vide si aucun) :</label>
-          <input type="text" id="persosChoisisIM" name="persosChoisis" size="50"><br>
-          <label for="nbConcurrents">Nombre de concurrents (de 1 à 6) </label>
-          <input type="text" id="nbConcurrentsIM" name="nbConcurrents" size="1"><br>
-          <input id="btnValiderFormTournoiIM" type="button" onclick="" value="Lancer le tournoi !">
-          <input name="btnClearEmbedTournoi" type="button" onclick="" value="Effacer les résultats">
-          <input name="btnReinitTournoi" type="button" onclick="" value="Réinitialiser tournoi">
-        </form>    
         <span class="error" id="erreur"></span><br>    
         <div id="resultat" style="display: none;">
           <h4 id="TitreRes">Titre</h4>

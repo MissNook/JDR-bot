@@ -17,6 +17,7 @@ const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae2
 ];
 const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
 let forInit = false;
+let nomsAcceptes = [];
 
 function simulerTournoiCompetence(){
     clearResultat();  
@@ -24,7 +25,7 @@ function simulerTournoiCompetence(){
     let formulaireTournoi = document.forms["formTournoiComp"];     
     let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "competence"); 
     if(elementsTournoi.hasErreur) return;
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit,true);
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit,nomsAcceptes,true);
     forInit = false;
     afficherEmbedDansHTML([returnedEmbed]);
 }
@@ -38,7 +39,7 @@ function simulerTournoiIleMonstres(){
         erreurSpan.innerHTML = "Attention, il faut entrer au moins un nom de personnage pour cette action."
         return;
     }
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit);
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit, nomsAcceptes);
     forInit = false;
     afficherEmbedDansHTML([returnedEmbed]);
 }
@@ -76,6 +77,7 @@ function createListeEquipes(){
     for(i=0;i<categories.types.length;i++){
         let checkbox = document.createElement("input");
         checkbox.type = "checkbox";
+        checkbox.name = "types";
         checkbox.value = categories.types[i];
         checkbox.id = "cb_" +i;
         let label = document.createElement("label");
@@ -95,6 +97,22 @@ function createListeEquipes(){
     }
     listeUniques.selectedIndex = 0;
     formEquipes.appendChild(listeUniques);
+    let btnAddEquipe = document.createElement("input");
+    btnAddEquipe.type = "button";
+    btnAddEquipe.value = "Ajouter à l'équipe";
+    btnAddEquipe.onclick = ajoutEquipe;
+    formEquipes.appendChild(btnAddEquipe);
+}
+
+function ajoutEquipe(){
+    let formEquipes =  document.forms["choixEquipes"]; 
+    let checkboxes = formEquipes["types"];
+    nomsAcceptes = [];
+    for(i=0;i<checkboxes.length;i++){
+        if(checkboxes[i].checked){
+            nomsAcceptes.push(checkboxes[i].value);
+        }
+    }
 }
 
 function afficherEmbedDansHTML(embedsToShow){
@@ -109,12 +127,12 @@ function afficherEmbedDansHTML(embedsToShow){
         divResultat.style.border = "3px solid " + currEmbed.color;
         for(let j=0;j<currEmbed.fields.length;j++){
             let currField = currEmbed.fields[j];
-            var boldText = document.createElement("b");
+            let boldText = document.createElement("b");
             boldText.innerHTML = formatForHTML(currField.name) + "<br>";
             fieldsRes.appendChild(boldText);            
-            var span2 = document.createElement("span");
-            span2.innerHTML = formatForHTML(currField.value);
-            fieldsRes.appendChild(span2);
+            let span = document.createElement("span");
+            span.innerHTML = formatForHTML(currField.value);
+            fieldsRes.appendChild(span);
         }
     }
     fieldsRes.innerHTLM += "<br>"
@@ -179,9 +197,59 @@ function clearResultat(){
     divResultat.style.display = "none";
 }
 
+function createDivPersos(){
+    let divPersos = document.getElementById("persosExistants");        
+    let tablePerso = document.createElement("table");
+    tablePerso.innerHTML = '<tr><th>Nom</th><th colspan="10">Stats</th><th>Special</th><th>Armes</th><th>Unique</th></tr>';
+    tablePerso.innerHTML += '<tr><th></th><th>COM</th><th>AGI</th><th>VIG</th><th>ESP</th><th>SEN</th><th>DEF</th><th>DefSPE</th><th>PV</th><th>Mana</th><th>Niveau</th><th></th><th></th><th></th></tr>';
+    for(let i=0;i<PersoModule.tabPersos.length;i++){ 
+        let ligneTable = formatPersoInHTML(PersoModule.tabPersos[i]);
+        tablePerso.appendChild(ligneTable);       
+    }
+    divPersos.appendChild(tablePerso);
+}
+
+function formatPersoInHTML(perso){ 
+    let ligneTable =  document.createElement("tr");
+    let textHTML = "<td>#nom</td><td>#com</td><td>#agi</td><td>#vig</td><td>#esp</td><td>#sen</td><td>#def</td><td>#defspe</td><td>#pv</td><td>#mana</td><td>#lvl</td><td>#special</td><td>#armes</td><td>#unique</td>";
+    textHTML = textHTML.replace("#nom",perso.nom);
+    textHTML = textHTML.replace("#com",perso.stats.com);
+    textHTML = textHTML.replace("#agi",perso.stats.agi);
+    textHTML = textHTML.replace("#vig",perso.stats.vig);
+    textHTML = textHTML.replace("#esp",perso.stats.esp);
+    textHTML = textHTML.replace("#sen",perso.stats.sen);
+    textHTML = textHTML.replace("#def",perso.stats.def);
+    textHTML = textHTML.replace("#defspe",perso.stats.defSpe);
+    textHTML = textHTML.replace("#pv",perso.stats.pvMax);
+    textHTML = textHTML.replace("#mana",perso.stats.manaMax);
+    textHTML = textHTML.replace("#lvl",perso.stats.lvl);
+
+    let i=0;
+    let nomsSpecial = "";
+    for(i=0;i<perso.stats.special.length;i++){ 
+        nomsSpecial += perso.stats.special[i].nom;
+    }
+    let nomsArmes = "";
+    for(i=0;i<perso.stats.armes.length;i++){ 
+        nomsArmes += perso.stats.armes[i].nom;
+    }    
+    textHTML = textHTML.replace("#special", nomsSpecial);
+    textHTML = textHTML.replace("#armes", nomsArmes);
+    textHTML = textHTML.replace("#unique",(perso.unique)?"Oui":"Non");
+    ligneTable.innerHTML = textHTML;
+    return ligneTable;    
+}
+
+function toggleDivPersos(this){
+    this.value = (this.value == "˅")? "˄" : "˅";
+    let divPersos = document.getElementById("persosExistants");
+    divPersos.style.display = (divPersos.style.display == "none") ? "block" : "none";
+}
+
 //obligé de faire comme ça car le module n'est pas visible dans le HTML contrairement à un code JS standard
 document.getElementById("btnValiderFormTournoiComp").onclick = simulerTournoiCompetence;
 document.getElementById("btnValiderFormTournoiIM").onclick = simulerTournoiIleMonstres;
+document.getElementById("btnToggleDivPersos").onclick = toggleDivPersos;
 var clearEmbedBtns = document.getElementsByName("btnClearEmbedTournoi");
 for(let i=0;i<clearEmbedBtns.length;i++){
     clearEmbedBtns[i].onclick = initEmbed;
@@ -190,5 +258,5 @@ var reinitTournoiBtns = document.getElementsByName("btnReinitTournoi");
 for(let i=0;i<reinitTournoiBtns.length;i++){
     reinitTournoiBtns[i].onclick = reinitTournoi;
 }
-
 createListeEquipes();
+createDivPersos();
