@@ -226,13 +226,17 @@ function formatPersoInHTML(perso){
 
     let i=0;
     let nomsSpecial = "";
-    for(i=0;i<perso.stats.special.length;i++){ 
-        nomsSpecial += perso.stats.special[i].nom;
+    if(typeof perso.stats.special !== "undefined" && perso.stats.special.length>0){
+        for(i=0;i<perso.stats.special.length;i++){ 
+            nomsSpecial += perso.stats.special[i].nom;
+        }
     }
     let nomsArmes = "";
-    for(i=0;i<perso.stats.armes.length;i++){ 
-        nomsArmes += perso.stats.armes[i].nom;
-    }    
+    if(typeof perso.stats.armes !== "undefined" && perso.stats.armes.length>0){
+        for(i=0;i<perso.stats.armes.length;i++){ 
+            nomsArmes += perso.stats.armes[i].nom;
+        }
+    }  
     textHTML = textHTML.replace("#special", nomsSpecial);
     textHTML = textHTML.replace("#armes", nomsArmes);
     textHTML = textHTML.replace("#unique",(perso.unique)?"Oui":"Non");
