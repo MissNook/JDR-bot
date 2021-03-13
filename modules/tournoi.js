@@ -163,26 +163,29 @@ function getMessageResultatTournoiSurUneStat(resTests, modeColonnes){
 				}			
 				currPerso.reussitesParTour.push(currRes.nbReussites);
 
-				if(currRes.nbReussites >=5){
-					marqueurReussites = emoteTresBonResultat;
-				}else if(currRes.nbReussites >=3){
-					marqueurReussites = emoteBonResultat;
-				}
-
 				if(modeColonnes){
 					msgRes += currRes.perso.nom  + "(" + currPerso.idPerso + ") ";
 					for(let k=0;k<currPerso.reussitesParTour.length;k++){
-						msgRes += "\t -> " + currPerso.reussitesParTour[k] + " " + marqueurReussites;
+						msgRes += "\t -> " + currPerso.reussitesParTour[k] + " " + getMarqueurReussite(currPerso.reussitesParTour[k]);
 					}
 					msgRes += " --- Total = " + currPerso.nbReussitesTotal + "\n";
 				}
 				else{
+					marqueurReussites = getMarqueurReussite(currRes.nbReussites);
 					msgRes += currRes.nbReussites + " réussites pour "+ currPerso.nom + "(" + currPerso.idPerso + ") " + marqueurReussites + "\n";
 				}
 			}
 		}		
 	}
 	return msgRes;
+}
+
+function getMarqueurReussite(nbReussites){
+	if(nbReussites >=5){
+		marqueurReussites = emoteTresBonResultat;
+	}else if(nbReussites >=3){
+		marqueurReussites = emoteBonResultat;
+	}
 }
 
 function sortResTest(res1, res2){

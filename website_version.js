@@ -201,8 +201,8 @@ function createDivPersos(){
     let divPersos = document.getElementById("persosExistants");        
     let tablePerso = document.createElement("table");
     tablePerso.className = "tablePerso";
-    tablePerso.innerHTML = '<tr><th>Nom</th><th colspan="10">Stats</th><th>Special</th><th>Armes</th><th>Unique</th></tr>';
-    tablePerso.innerHTML += '<tr><th></th><th>COM</th><th>AGI</th><th>VIG</th><th>ESP</th><th>SEN</th><th>DEF</th><th>DefSPE</th><th>PV</th><th>Mana</th><th>Niveau</th><th></th><th></th><th></th></tr>';
+    tablePerso.innerHTML = '<tr><th>Id</th><th>Nom</th><th colspan="10">Stats</th><th>Special</th><th>Armes</th><th>Unique</th></tr>';
+    tablePerso.innerHTML += '<tr><th></th><th></th><th>COM</th><th>AGI</th><th>VIG</th><th>ESP</th><th>SEN</th><th>DEF</th><th>DefSPE</th><th>PV</th><th>Mana</th><th>Niveau</th><th></th><th></th><th></th></tr>';
     for(let i=0;i<PersoModule.tabPersos.length;i++){ 
         let ligneTable = formatPersoInHTML(PersoModule.tabPersos[i]);
         tablePerso.appendChild(ligneTable);       
@@ -212,7 +212,8 @@ function createDivPersos(){
 
 function formatPersoInHTML(perso){ 
     let ligneTable =  document.createElement("tr");
-    let textHTML = "<td class='leftAlign'>#nom</td><td>#com</td><td>#agi</td><td>#vig</td><td>#esp</td><td>#sen</td><td>#def</td><td>#defspe</td><td>#pv</td><td>#mana</td><td>#lvl</td><td>#special</td><td>#armes</td><td>#unique</td>";
+    let textHTML = "<td>#id</td><td class='leftAlign'>#nom</td><td>#com</td><td>#agi</td><td>#vig</td><td>#esp</td><td>#sen</td><td>#def</td><td>#defspe</td><td>#pv</td><td>#mana</td><td>#lvl</td><td>#special</td><td>#armes</td><td>#unique</td>";
+    textHTML = textHTML.replace("#id",perso.idPerso);
     textHTML = textHTML.replace("#nom",perso.nom);
     textHTML = textHTML.replace("#com",perso.stats.com);
     textHTML = textHTML.replace("#agi",perso.stats.agi);

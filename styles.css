@@ -37,7 +37,7 @@ td.leftAlign{
     border-collapse: collapse;
 }
 
-.tablePerso > th{
+th{
     border: 1px solid black;
 }
 td{
