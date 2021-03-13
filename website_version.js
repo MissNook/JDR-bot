@@ -16,6 +16,7 @@ const tabEmojis = [{id:"ladder", src:"https://discord.com/assets/c9ab5c7dade3ae2
 {id:"star2", src:"https://discord.com/assets/030fc6691abd2ab36c1d90407e02505e.svg"}
 ];
 const svgImgHTML = '<img width="20px" height="20px" src="#src#"></img>';
+let forInit = false;
 
 function simulerTournoiCompetence(){
     clearResultat();  
@@ -23,7 +24,7 @@ function simulerTournoiCompetence(){
     let formulaireTournoi = document.forms["formTournoiComp"];     
     let elementsTournoi = getStandardElementsTournoi(formulaireTournoi, "competence"); 
     if(elementsTournoi.hasErreur) return;
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,false,true);
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit,true);
     afficherEmbedDansHTML([returnedEmbed]);
 }
 
@@ -36,7 +37,7 @@ function simulerTournoiIleMonstres(){
         erreurSpan.innerHTML = "Attention, il faut entrer au moins un nom de personnage pour cette action."
         return;
     }
-    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents);
+    let returnedEmbed = TournoiModule.simulerTournoi(embedMessage, elementsTournoi.typeTournoi, elementsTournoi.persosCombat, elementsTournoi.nbConcurrents,forInit);
     afficherEmbedDansHTML([returnedEmbed]);
 }
 
@@ -148,6 +149,10 @@ function addMarginForTab(text){
     return text.replace(/\t/g, '<span class="tabulation"/>');
 }
 
+function reinitTournoi(){
+    forInit = true;
+}
+
 function initEmbed(){
     embedMessage = {
         "fields": [],
@@ -179,4 +184,9 @@ var clearEmbedBtns = document.getElementsByName("btnClearEmbedTournoi");
 for(let i=0;i<clearEmbedBtns.length;i++){
     clearEmbedBtns[i].onclick = initEmbed;
 }
+var reinitTournoiBtns = document.getElementsByName("btnReinitTournoi");
+for(let i=0;i<reinitTournoiBtns.length;i++){
+    reinitTournoiBtns[i].onclick = reinitTournoi;
+}
+
 createListeEquipes();
