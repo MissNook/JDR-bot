@@ -240,8 +240,9 @@ function formatPersoInHTML(perso){
     return ligneTable;    
 }
 
-function toggleDivPersos(this){
-    this.value = (this.value == "˅")? "˄" : "˅";
+function toggleDivPersos(){
+    let btnToggle = document.getElementById("btnToggleDivPersos");
+    btnToggle.value = (btnToggle.value == "˅")? "˄" : "˅";
     let divPersos = document.getElementById("persosExistants");
     divPersos.style.display = (divPersos.style.display == "none") ? "block" : "none";
 }
