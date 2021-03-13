@@ -134,8 +134,8 @@ function afficherEmbedDansHTML(embedsToShow){
             span.innerHTML = formatForHTML(currField.value);
             fieldsRes.appendChild(span);
         }
-    }
-    fieldsRes.innerHTLM += "<br>"
+    }    
+    fieldsRes.appendChild(document.createElement("br"));
     divResultat.style.display = "block";
 }
 
