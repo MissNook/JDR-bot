@@ -26,6 +26,11 @@ function createTabPersos(){
 	tableauPersos.push(createPerso("Combattant_F",3,1,3,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")])); //vigoureux
 	tableauPersos.push(createPerso("Gabier_A",3,4,2,0,1,0,0,20,20,0,3,null,[getArmesEtTalentsInfo("Dague")]));
 	tableauPersos.push(createPerso("Gabier_B",3,3,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")]));
+	tableauPersos.push(createPerso("Gabier_C",2,4,2,0,1,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Dague")]));
+	tableauPersos.push(createPerso("Gabier_D",3,4,2,1,1,0,0,15,15,0,3,null,[getArmesEtTalentsInfo("Dague")]));
+	tableauPersos.push(createPerso("Gabier_E",3,4,2,0,1,1,0,15,15,0,3,null,[getArmesEtTalentsInfo("Dague")])); //AGI + DEF
+	tableauPersos.push(createPerso("Gabier_F",3,5,2,0,1,0,0,15,15,0,4,null,[getArmesEtTalentsInfo("Dague")]));
+	tableauPersos.push(createPerso("Gabier_G",3,5,2,0,1,1,0,15,15,0,5,null,[getArmesEtTalentsInfo("Dague")])); //AGI + DEF
 	tableauPersos.push(createPerso("Archer_A",1,2,1,0,3,0,0,15,15,0,1,null,[getArmesEtTalentsInfo("Arc")])); //SEN
 	tableauPersos.push(createPerso("Archer_B",1,2,1,0,3,1,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + DEF
 	tableauPersos.push(createPerso("Archer_C",1,3,1,0,3,0,0,15,15,0,2,null,[getArmesEtTalentsInfo("Arc")])); //SEN + AGI
